@@ -11,3 +11,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.error {
+  color: red;
+}
+
+.card-body {
+  display: flex;
+  height: 50vh;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin: auto;
+}
+
+.nikname {
+  margin: 10px;
+  padding: auto;
+}
+
+.password {
+  margin: 10px;
+  padding: auto;
+  
+}
+
+.buttonSub {
+  margin: 10px;
+  align-self: flex-end;
+  display: grid;
+}
+
+h1 {
+  font-weight: 500;
+  box-sizing: border-box;
+  display: grid;
+  justify-content: center;
+}
