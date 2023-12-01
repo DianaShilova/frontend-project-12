@@ -1,12 +1,23 @@
 import { Formik, Field, Form } from "formik";
 import * as yup from "yup";
 import image from "../images/person.png"
+import { useContext } from "react";
+import { AuthContext } from "../contexts/authContext";
+import { Navigate } from "react-router-dom";
 
 export const LoginPage = () => {
     const schema = yup.object().shape({
-        nikname: yup.string().required('Отсутствует имя'),
+        username: yup.string().required('Отсутствует имя'),
         password: yup.string().required('Отсутствует пароль'),
     })
+
+    const authContext = useContext(AuthContext);
+
+    if (authContext.isAuthenticated) {
+        return (
+            <Navigate to="/" />
+        )
+    } else 
     return (
         <div className="card-shadow">
             <div className="card-body">
@@ -17,27 +28,31 @@ export const LoginPage = () => {
                 <h1 className="text-center mb-4">Войти</h1>
                 <Formik
                     initialValues={{
-                    nikname: '',
+                    username: '',
                     password: '',
                     }}
                     validationSchema={schema}
-                    onSubmit={async (values) => {
-                    await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify(values, null, 2));
+                    onSubmit={async (values, formikBag) => {
+                        try {
+                            await authContext.login(values)
+                        } catch (error) {
+                            formikBag.setFieldError('password', error.message);
+                        }
                     }}
                 >
                     {({ errors, touched, isValidating }) => (
                     <Form>
-                        <div className="nikname">
-                            <label htmlFor="nikname"></label>
-                            <Field id="nikname" name="nikname" placeholder="Ваш ник" />
-                            {errors.nikname && touched.nikname && <div className="error">{errors.nikname}</div>}
+                        <div className="username">
+                            <label htmlFor="username"></label>
+                            <Field id="username" name="username" placeholder="Ваш ник" />
+                            {errors.username && touched.username && <div className="error">{errors.username}</div>}
                         </div>
                         <div className="password">
                             <label htmlFor="password"></label>
                          <Field id="password" name="password" placeholder="Пароль" />
                          {errors.password && touched.password && <div className="error">{errors.password}</div>}
                         </div>
+                        <div></div>
                     <button className="buttonSub" type="submit">Войти</button>
                     </Form>
                     )}
