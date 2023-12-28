@@ -1,22 +1,25 @@
+import { Provider } from 'react-redux';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LoginPage } from '../pages/login.jsx';
-import HomePage from '../pages/home.jsx';
-import NotFoundPage from '../pages/notfound';
+import { HomePage } from '../pages/home.jsx';
+import { NotFoundPage } from '../pages/notfound';
 import { AuthProvider } from '../contexts/authContext';
+import store from '../slices/index.js';
 
 function App() {
   return (
       <BrowserRouter>
-        <AuthProvider> 
-          <Routes>
-            <Route path="login" element={ <LoginPage />} />
-            <Route path="/" element={ <HomePage />} />
-            <Route path="*" element={ <NotFoundPage />} />
-          </Routes>
-        </AuthProvider>
+        <Provider store={store}>
+          <AuthProvider> 
+            <Routes>
+              <Route path="login" element={ <LoginPage />} />
+              <Route path="/" element={ <HomePage />} />
+              <Route path="*" element={ <NotFoundPage />} />
+            </Routes>
+          </AuthProvider>
+        </Provider>
       </BrowserRouter>
-    
   );
 }
 

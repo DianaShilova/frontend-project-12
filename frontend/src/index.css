@@ -44,10 +44,42 @@ code {
   width: 88%;
 }
 
-h1 {
-  font-size: 30px;
+a {
+  font-size: 20px;
   font-weight: 500;
   box-sizing: border-box;
   display: grid;
   justify-content: center;
+  align-content: space-around;
+}
+
+.navbarcontainer {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 16px 60px;
+  border: solid #E2E2E2;
+}
+
+.navbarcontainer button {
+  font-size: 16px;
+  padding: 6px 12px;
+  background-color: #0d6efd;
+  line-height: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  border-bottom-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+  font-weight: 400;
+}
+
+.body-container {
+  margin: 24px 60px;
+  display: flex;
+}
+
+.shadow {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important
 }

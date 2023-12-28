@@ -11,7 +11,7 @@ export function AuthProvider ({ children }) {
 
     const login = async (values) => {
         try {
-            const result = await axios.post('http://localhost:5001/api/v1/login', values);
+            const result = await axios.post('http://localhost:3000/api/v1/login', values);
             const token = result.data.token;
         
             localStorage.setItem('token', token);
