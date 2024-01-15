@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx start-server -s ./frontend/build"
+    "start-backend": "npx start-server -s ./frontend/build",
+    "start-frontend": "cd frontend && npm start",
+    "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\""
   },
   "repository": {
     "type": "git",
@@ -22,5 +24,8 @@
     "formik": "^2.4.5",
     "lorem-ipsum": "^2.0.8",
     "react-router-dom": "^6.20.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
