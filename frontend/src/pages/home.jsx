@@ -4,15 +4,16 @@ import { AuthContext } from "../contexts/authContext";
 import { Navigate } from "react-router-dom";
 import { useData } from "../hooks/useData";
 import { useSelector } from "react-redux";
+import { ChannelModal } from "../components/ChannelModal";
 import "./home.css";
 
 export function HomePage() {
   const authContext = useContext(AuthContext);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
-  console.log(isSending);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const { sendMessage } = useData();
+  const { sendMessage, addChannel } = useData();
 
   const channels = useSelector((store) => store.channels);
   const messages = useSelector((store) => store.messages);
@@ -20,7 +21,6 @@ export function HomePage() {
 
   const renderChannels = () => {
     return channels.ids.map((id) => {
-      const channel = channels.entities[id];
       return (
         <li key={id}>
           <button className="channels-button">
@@ -42,7 +42,7 @@ export function HomePage() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmitMessage = async (e) => {
     e.preventDefault();
     setIsSending(true);
     try {
@@ -55,13 +55,32 @@ export function HomePage() {
     }
   };
 
+  const handleSubmitChannel = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await addChannel(e.target.value);
+      console.log(result);
+      handleCloseChannelModal();
+    } catch (e) {
+      console.log("error:", e);
+    }
+  };
+
+  const handleAddChannel = () => {
+    setIsOpenModal(true);
+  };
+
+  const handleCloseChannelModal = () => {
+    setIsOpenModal(false);
+  };
+
   if (!authContext.isAuthenticated) {
     return <Navigate to="/login" />;
   } else
     return (
       <>
         <header>
-          <nav className="navbar">
+          <nav>
             <div className="navbarcontainer">
               <a>DISH Chat</a>
               <button onClick={authContext.logout}>Выйти</button>
@@ -73,7 +92,9 @@ export function HomePage() {
             <section className="channels-container">
               <header className="channels-header">
                 <b>Каналы</b>
-                <button className="channels-add">+</button>
+                <button className="channels-add" onClick={handleAddChannel}>
+                  +
+                </button>
               </header>
               <div>
                 {channels ? (
@@ -94,7 +115,7 @@ export function HomePage() {
                   {messages ? renderMessages() : <span>Loading</span>}
                 </div>
               </div>
-              <form className="messages-form" onSubmit={handleSubmit}>
+              <form className="messages-form" onSubmit={handleSubmitMessage}>
                 <div className="messages-input-wrapper">
                   <input
                     className="messages-input"
@@ -111,6 +132,13 @@ export function HomePage() {
             </section>
           </div>
         </main>
+        <ChannelModal
+          onSubmit={(e) => handleSubmitChannel(e)}
+          isOpen={isOpenModal}
+          onClose={handleCloseChannelModal}
+        />
       </>
     );
 }
+
+//4. отправить запрос на создание канала addChannel
