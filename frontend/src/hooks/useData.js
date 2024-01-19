@@ -34,6 +34,7 @@ export const useData = () => {
     socket.on("newMessage", handleNewMessage);
 
     const handleNewChannel = (channel) => {
+      console.log(channel);
       dispatch(addChannel(channel));
     };
     socket.on("newChannel", handleNewChannel);
@@ -60,13 +61,18 @@ export const useData = () => {
     });
   };
 
-  const addChannel = async (channelName) => {
+  const sendChannel = async (channelName) => {
     return new Promise((resolve) => {
-      socket.emit("newChannel", {
-        name: channelName,
-        removable: true,
-      });
+      socket.emit(
+        "newChannel",
+        {
+          name: channelName,
+        },
+        () => {
+          resolve();
+        },
+      );
     });
   };
-  return { sendMessage, addChannel };
+  return { sendMessage, sendChannel };
 };

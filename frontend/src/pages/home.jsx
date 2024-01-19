@@ -13,7 +13,7 @@ export function HomePage() {
   const [isSending, setIsSending] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const { sendMessage, addChannel } = useData();
+  const { sendMessage, sendChannel } = useData();
 
   const channels = useSelector((store) => store.channels);
   const messages = useSelector((store) => store.messages);
@@ -55,10 +55,9 @@ export function HomePage() {
     }
   };
 
-  const handleSubmitChannel = async (e) => {
-    e.preventDefault();
+  const handleSubmitChannel = async (values) => {
     try {
-      const result = await addChannel(e.target.value);
+      const result = await sendChannel(values.channelName);
       console.log(result);
       handleCloseChannelModal();
     } catch (e) {
@@ -133,7 +132,7 @@ export function HomePage() {
           </div>
         </main>
         <ChannelModal
-          onSubmit={(e) => handleSubmitChannel(e)}
+          onSubmit={handleSubmitChannel}
           isOpen={isOpenModal}
           onClose={handleCloseChannelModal}
         />
