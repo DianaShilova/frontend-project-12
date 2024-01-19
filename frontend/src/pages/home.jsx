@@ -13,17 +13,28 @@ export function HomePage() {
   const [isSending, setIsSending] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const { sendMessage, sendChannel } = useData();
+  const { sendMessage, sendChannel, handleSetChannel } = useData();
 
   const channels = useSelector((store) => store.channels);
   const messages = useSelector((store) => store.messages);
-  const messagesQuantity = messages.ids.length;
+  const currentChannelId = useSelector(
+    (store) => store.channels.currentChannelId,
+  );
+
+  const filtered = Object.values(messages.entities).filter(
+    (message) => message.channelId === currentChannelId,
+  );
+
+  const messagesQuantity = filtered.length;
 
   const renderChannels = () => {
     return channels.ids.map((id) => {
       return (
         <li key={id}>
-          <button className="channels-button">
+          <button
+            className="channels-button"
+            onClick={() => handleSetChannel(id)}
+          >
             # {channels.entities[id].name}
           </button>
         </li>
@@ -32,8 +43,7 @@ export function HomePage() {
   };
 
   const renderMessages = () => {
-    return messages.ids.map((id) => {
-      const message = messages.entities[id];
+    return filtered.map((message) => {
       return (
         <div key={message.id}>
           <b>{message.name}</b>: {message.text}
@@ -106,7 +116,10 @@ export function HomePage() {
             <section className="messages-container">
               <div className="messages-header">
                 <span>
-                  # general <br /> {messagesQuantity} сообщений
+                  #{" "}
+                  {channels.entities[currentChannelId] &&
+                    channels.entities[currentChannelId].name}
+                  <br /> {messagesQuantity} сообщений
                 </span>
               </div>
               <div className="messages-content">

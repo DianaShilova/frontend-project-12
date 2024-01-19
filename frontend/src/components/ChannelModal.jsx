@@ -41,29 +41,32 @@ export const ChannelModal = (props) => {
           {({ handleChange, handleBlur, values, errors }) => (
             <form onSubmit={handleSubmit(values)}>
               <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
+                <Modal.Title>Добавить канал</Modal.Title>
               </Modal.Header>
 
               <Modal.Body>
                 <Field
+                  className="modal-input"
                   onChange={handleChange}
                   value={values.channelName}
                   onBlur={handleBlur}
                   name="channelName"
                 />
-                {errors.name && <div>{errors.name}</div>}
+                {errors.name && (
+                  <div className="error-modal">{errors.name}</div>
+                )}
               </Modal.Body>
 
               <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>
-                  Close
+                  Отменить
                 </Button>
                 <Button
                   type="submit"
                   disabled={errors.name ? true : false}
                   variant="primary"
                 >
-                  Save changes
+                  Отправить
                 </Button>
               </Modal.Footer>
             </form>

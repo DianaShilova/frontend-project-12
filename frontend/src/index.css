@@ -84,3 +84,13 @@ a {
 .shadow {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
+
+.modal-input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.error-modal {
+  color: rgba(208, 28, 12, 0.862);
+  font-size: 14px;
+}

@@ -1,8 +1,11 @@
 import { useContext, useEffect, useMemo } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addChannels } from "../slices/channelsSlice.js";
-import { addChannel } from "../slices/channelsSlice.js";
+import {
+  addChannels,
+  addChannel,
+  setChannel,
+} from "../slices/channelsSlice.js";
 import { addMessages } from "../slices/messagesSlice.js";
 import { addMessage } from "../slices/messagesSlice.js";
 import { io } from "socket.io-client";
@@ -11,7 +14,7 @@ import { AuthContext } from "../contexts/authContext.jsx";
 export const useData = () => {
   const dispatch = useDispatch();
   const authContext = useContext(AuthContext);
-  const channelId = useSelector((store) => store.currentChannelId);
+  const channelId = useSelector((store) => store.channels.currentChannelId);
 
   useEffect(() => {
     axios
@@ -34,7 +37,6 @@ export const useData = () => {
     socket.on("newMessage", handleNewMessage);
 
     const handleNewChannel = (channel) => {
-      console.log(channel);
       dispatch(addChannel(channel));
     };
     socket.on("newChannel", handleNewChannel);
@@ -44,6 +46,11 @@ export const useData = () => {
       socket.off("newChannel", handleNewChannel);
     };
   }, []);
+
+  const handleSetChannel = (id) => {
+    console.log(id);
+    dispatch(setChannel(id));
+  };
 
   const sendMessage = async (value) => {
     return new Promise((resolve) => {
@@ -74,5 +81,5 @@ export const useData = () => {
       );
     });
   };
-  return { sendMessage, sendChannel };
+  return { sendMessage, sendChannel, handleSetChannel };
 };
