@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Formik, Field } from "formik";
 import { useSelector } from "react-redux";
 
 export const ChannelModal = (props) => {
-  const { isOpen, onClose, onSubmit } = props;
+  const { isOpen, onClose, onSubmit, title } = props;
   const channels = useSelector((store) => store.channels.entities);
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      inputEl.current.focus();
+    }
+  }, [isOpen]);
 
   const validate = (values) => {
     const errors = {};
@@ -47,6 +54,7 @@ export const ChannelModal = (props) => {
               <Modal.Body>
                 <Field
                   className="modal-input"
+                  innerRef={inputEl}
                   onChange={handleChange}
                   value={values.channelName}
                   onBlur={handleBlur}
@@ -56,7 +64,6 @@ export const ChannelModal = (props) => {
                   <div className="error-modal">{errors.name}</div>
                 )}
               </Modal.Body>
-
               <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>
                   Отменить

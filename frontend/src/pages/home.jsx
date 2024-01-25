@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { useData } from "../hooks/useData";
 import { useSelector } from "react-redux";
 import { ChannelModal } from "../components/ChannelModal";
+import { ChannelOption } from "../components/channelOption";
 import "./home.css";
 
 export function HomePage() {
@@ -13,7 +14,8 @@ export function HomePage() {
   const [isSending, setIsSending] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const { sendMessage, sendChannel, handleSetChannel } = useData();
+  const { sendMessage, sendChannel, handleSetChannel, deleteChannel } =
+    useData();
 
   const channels = useSelector((store) => store.channels);
   const messages = useSelector((store) => store.messages);
@@ -29,17 +31,31 @@ export function HomePage() {
 
   const renderChannels = () => {
     return channels.ids.map((id) => {
+      console.log(channels.entities);
       return (
         <li key={id}>
-          <button
-            className="channels-button"
-            onClick={() => handleSetChannel(id)}
-          >
-            # {channels.entities[id].name}
-          </button>
+          <div className="group-channel">
+            <button
+              className="channels-button"
+              onClick={() => handleSetChannel(id)}
+            >
+              # {channels.entities[id].name}
+            </button>
+            {channels.entities[id].removable && (
+              <ChannelOption id={id} onChannelDelete={handleDeleteChannel} />
+            )}
+          </div>
         </li>
       );
     });
+  };
+
+  const handleDeleteChannel = async (id) => {
+    try {
+      const result = await deleteChannel(id);
+    } catch {
+      console.log("error");
+    }
   };
 
   const renderMessages = () => {
@@ -57,7 +73,6 @@ export function HomePage() {
     setIsSending(true);
     try {
       const result = await sendMessage(input);
-      console.log(result);
       setIsSending(false);
       setInput("");
     } catch (e) {
@@ -101,7 +116,11 @@ export function HomePage() {
             <section className="channels-container">
               <header className="channels-header">
                 <b>Каналы</b>
-                <button className="channels-add" onClick={handleAddChannel}>
+                <button
+                  className="channels-add"
+                  onClick={handleAddChannel}
+                  onSubmit={handleSetChannel(id)}
+                >
                   +
                 </button>
               </header>
@@ -148,6 +167,7 @@ export function HomePage() {
           onSubmit={handleSubmitChannel}
           isOpen={isOpenModal}
           onClose={handleCloseChannelModal}
+          //
         />
       </>
     );

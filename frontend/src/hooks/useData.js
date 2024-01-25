@@ -5,6 +5,7 @@ import {
   addChannels,
   addChannel,
   setChannel,
+  removeChannel,
 } from "../slices/channelsSlice.js";
 import { addMessages } from "../slices/messagesSlice.js";
 import { addMessage } from "../slices/messagesSlice.js";
@@ -41,14 +42,20 @@ export const useData = () => {
     };
     socket.on("newChannel", handleNewChannel);
 
+    const handleRemoveChannel = (channel) => {
+      console.log(channel.id);
+      dispatch(removeChannel(channel.id));
+    };
+    socket.on("removeChannel", handleRemoveChannel);
+
     return () => {
       socket.off("newMessage", handleNewMessage);
       socket.off("newChannel", handleNewChannel);
+      socket.off("removeChannel", handleRemoveChannel);
     };
   }, []);
 
   const handleSetChannel = (id) => {
-    console.log(id);
     dispatch(setChannel(id));
   };
 
@@ -81,5 +88,20 @@ export const useData = () => {
       );
     });
   };
-  return { sendMessage, sendChannel, handleSetChannel };
+
+  const deleteChannel = async (id) => {
+    return new Promise((resolve) => {
+      socket.emit(
+        "removeChannel",
+        {
+          id,
+        },
+        () => {
+          resolve();
+        },
+      );
+    });
+  };
+
+  return { sendMessage, sendChannel, handleSetChannel, deleteChannel };
 };
