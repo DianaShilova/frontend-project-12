@@ -29,9 +29,22 @@ export function HomePage() {
 
   const messagesQuantity = filtered.length;
 
+  const wordMessage = (messagesQuantity) => {
+    const lastNumber = messagesQuantity % 10;
+    if (messagesQuantity === 0) {
+      return "Сообщений";
+    }
+    if (4 < messagesQuantity && messagesQuantity < 21) {
+      return "Сообщений";
+    } else if (lastNumber === 1) {
+      return "Сообщение";
+    } else if (1 < lastNumber && lastNumber < 5) {
+      return "Сообщения";
+    } else return "Сообщений";
+  };
+
   const renderChannels = () => {
     return channels.ids.map((id) => {
-      console.log(channels.entities);
       return (
         <li key={id}>
           <div className="group-channel">
@@ -83,7 +96,6 @@ export function HomePage() {
   const handleSubmitChannel = async (values) => {
     try {
       const result = await sendChannel(values.channelName);
-      console.log(result);
       handleCloseChannelModal();
     } catch (e) {
       console.log("error:", e);
@@ -116,21 +128,15 @@ export function HomePage() {
             <section className="channels-container">
               <header className="channels-header">
                 <b>Каналы</b>
-                <button
-                  className="channels-add"
-                  onClick={handleAddChannel}
-                  onSubmit={handleSetChannel(id)}
-                >
+                <button className="channels-add" onClick={handleAddChannel}>
                   +
                 </button>
               </header>
-              <div>
-                {channels ? (
-                  <ul className="channels-list">{renderChannels()}</ul>
-                ) : (
-                  <span>Loading</span>
-                )}
-              </div>
+              {channels ? (
+                <ul className="channels-list">{renderChannels()}</ul>
+              ) : (
+                <span>Loading</span>
+              )}
             </section>
             <section className="messages-container">
               <div className="messages-header">
@@ -138,13 +144,11 @@ export function HomePage() {
                   #{" "}
                   {channels.entities[currentChannelId] &&
                     channels.entities[currentChannelId].name}
-                  <br /> {messagesQuantity} сообщений
+                  <br /> {messagesQuantity} {wordMessage(messagesQuantity)}
                 </span>
               </div>
               <div className="messages-content">
-                <div className="text-break">
-                  {messages ? renderMessages() : <span>Loading</span>}
-                </div>
+                {messages ? renderMessages() : <span>Loading</span>}
               </div>
               <form className="messages-form" onSubmit={handleSubmitMessage}>
                 <div className="messages-input-wrapper">

@@ -17,7 +17,6 @@ const channelSlice = createSlice({
     },
     updateChannels: channelsAdapter.updateOne,
     setChannel: (state, { payload }) => {
-      console.log("payload", payload);
       return { ...state, currentChannelId: payload };
     },
   },

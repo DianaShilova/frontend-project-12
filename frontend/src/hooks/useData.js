@@ -43,7 +43,6 @@ export const useData = () => {
     socket.on("newChannel", handleNewChannel);
 
     const handleRemoveChannel = (channel) => {
-      console.log(channel.id);
       dispatch(removeChannel(channel.id));
     };
     socket.on("removeChannel", handleRemoveChannel);
