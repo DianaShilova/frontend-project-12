@@ -5,9 +5,10 @@ import { Formik, Field } from "formik";
 import { useSelector } from "react-redux";
 
 export const ChannelModal = (props) => {
-  const { isOpen, onClose, onSubmit, title } = props;
+  const { isOpen, onClose, onSubmit, id } = props;
   const channels = useSelector((store) => store.channels.entities);
   const inputEl = useRef(null);
+  const channel = useSelector((store) => store.channels.entities[id]);
 
   useEffect(() => {
     if (isOpen) {
@@ -23,7 +24,7 @@ export const ChannelModal = (props) => {
       (ch) => ch.name === values.channelName,
     );
 
-    if (existingChannel) {
+    if (!channel && existingChannel) {
       errors.name = "Такой канал уже существует";
     }
     if (!values.channelName) {
@@ -36,19 +37,22 @@ export const ChannelModal = (props) => {
     e.preventDefault();
     onSubmit(values);
   };
+
   return (
     <div className="modal show">
       <Modal show={isOpen} onHide={onClose}>
         <Formik
           initialValues={{
-            channelName: "",
+            channelName: channel ? channel.name : "",
           }}
           validate={validate}
         >
           {({ handleChange, handleBlur, values, errors }) => (
             <form onSubmit={handleSubmit(values)}>
               <Modal.Header closeButton>
-                <Modal.Title>Добавить канал</Modal.Title>
+                <Modal.Title>
+                  {id ? "Переименовать канал" : "Добавить канал"}
+                </Modal.Title>
               </Modal.Header>
 
               <Modal.Body>

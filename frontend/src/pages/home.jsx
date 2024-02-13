@@ -6,6 +6,7 @@ import { useData } from "../hooks/useData";
 import { useSelector } from "react-redux";
 import { ChannelModal } from "../components/ChannelModal";
 import { ChannelOption } from "../components/channelOption";
+import DeletingChannelModal from "../components/DeletingChannelModal";
 import "./home.css";
 
 export function HomePage() {
@@ -13,9 +14,16 @@ export function HomePage() {
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
+  const [selectedChannel, setSelectedChannel] = useState(null);
 
-  const { sendMessage, sendChannel, handleSetChannel, deleteChannel } =
-    useData();
+  const {
+    sendMessage,
+    sendChannel,
+    handleSetChannel,
+    deleteChannel,
+    renameChannel,
+  } = useData();
 
   const channels = useSelector((store) => store.channels);
   const messages = useSelector((store) => store.messages);
@@ -47,7 +55,11 @@ export function HomePage() {
     return channels.ids.map((id) => {
       return (
         <li key={id}>
-          <div className="group-channel">
+          <div
+            className={
+              currentChannelId === id ? "group-channel active" : "group-channel"
+            }
+          >
             <button
               className="channels-button"
               onClick={() => handleSetChannel(id)}
@@ -55,7 +67,11 @@ export function HomePage() {
               # {channels.entities[id].name}
             </button>
             {channels.entities[id].removable && (
-              <ChannelOption id={id} onChannelDelete={handleDeleteChannel} />
+              <ChannelOption
+                id={id}
+                onDelete={() => handleOpenDeleteModal(id)}
+                onEdit={() => handleOpenEditModal(id)}
+              />
             )}
           </div>
         </li>
@@ -63,11 +79,13 @@ export function HomePage() {
     });
   };
 
-  const handleDeleteChannel = async (id) => {
+  const handleDeleteChannel = async () => {
     try {
-      const result = await deleteChannel(id);
+      await deleteChannel(selectedChannel);
     } catch {
       console.log("error");
+    } finally {
+      setSelectedChannel(null);
     }
   };
 
@@ -95,8 +113,13 @@ export function HomePage() {
 
   const handleSubmitChannel = async (values) => {
     try {
-      const result = await sendChannel(values.channelName);
+      if (!selectedChannel) {
+        await sendChannel(values.channelName);
+      } else {
+        await renameChannel(selectedChannel, values.channelName);
+      }
       handleCloseChannelModal();
+      setSelectedChannel(null);
     } catch (e) {
       console.log("error:", e);
     }
@@ -108,6 +131,20 @@ export function HomePage() {
 
   const handleCloseChannelModal = () => {
     setIsOpenModal(false);
+  };
+
+  const handleOpenDeleteModal = (id) => {
+    setSelectedChannel(id);
+    setIsOpenModalDelete(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsOpenModalDelete(false);
+  };
+
+  const handleOpenEditModal = (selectedChannel) => {
+    setSelectedChannel(selectedChannel);
+    setIsOpenModal(true);
   };
 
   if (!authContext.isAuthenticated) {
@@ -171,7 +208,12 @@ export function HomePage() {
           onSubmit={handleSubmitChannel}
           isOpen={isOpenModal}
           onClose={handleCloseChannelModal}
-          //
+          id={selectedChannel}
+        />
+        <DeletingChannelModal
+          onSubmit={handleDeleteChannel}
+          isOpen={isOpenModalDelete}
+          onClose={handleCloseDeleteModal}
         />
       </>
     );

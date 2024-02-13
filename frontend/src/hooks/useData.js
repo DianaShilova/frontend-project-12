@@ -6,8 +6,9 @@ import {
   addChannel,
   setChannel,
   removeChannel,
+  updateChannel,
 } from "../slices/channelsSlice.js";
-import { addMessages } from "../slices/messagesSlice.js";
+import { addMessages, removeMessages } from "../slices/messagesSlice.js";
 import { addMessage } from "../slices/messagesSlice.js";
 import { io } from "socket.io-client";
 import { AuthContext } from "../contexts/authContext.jsx";
@@ -39,18 +40,26 @@ export const useData = () => {
 
     const handleNewChannel = (channel) => {
       dispatch(addChannel(channel));
+      handleSetChannel(channel.id);
     };
     socket.on("newChannel", handleNewChannel);
 
     const handleRemoveChannel = (channel) => {
       dispatch(removeChannel(channel.id));
+      // dispatch(removeMessages(channel.id))
     };
     socket.on("removeChannel", handleRemoveChannel);
+
+    const handleEditChannel = ({ id, name }) => {
+      dispatch(updateChannel({ id, name }));
+    };
+    socket.on("renameChannel", handleEditChannel);
 
     return () => {
       socket.off("newMessage", handleNewMessage);
       socket.off("newChannel", handleNewChannel);
       socket.off("removeChannel", handleRemoveChannel);
+      socket.off("renameChannel", handleEditChannel);
     };
   }, []);
 
@@ -102,5 +111,26 @@ export const useData = () => {
     });
   };
 
-  return { sendMessage, sendChannel, handleSetChannel, deleteChannel };
+  const renameChannel = async (id, name) => {
+    return new Promise((resolve) => {
+      socket.emit(
+        "renameChannel",
+        {
+          id,
+          name,
+        },
+        () => {
+          resolve();
+        },
+      );
+    });
+  };
+
+  return {
+    sendMessage,
+    sendChannel,
+    handleSetChannel,
+    deleteChannel,
+    renameChannel,
+  };
 };

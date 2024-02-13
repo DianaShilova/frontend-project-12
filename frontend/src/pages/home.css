@@ -62,6 +62,10 @@
   white-space: nowrap;
 }
 
+.group-channel.active {
+  background: rgba(0, 0, 0, 0.075);
+}
+
 .channels-option {
   border: 0px;
   background-color: transparent;
