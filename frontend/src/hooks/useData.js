@@ -13,6 +13,8 @@ import { addMessage } from "../slices/messagesSlice.js";
 import { io } from "socket.io-client";
 import { AuthContext } from "../contexts/authContext.jsx";
 
+const serverUrl = process.env.REACT_APP_SERVER_URL;
+
 export const useData = () => {
   const dispatch = useDispatch();
   const authContext = useContext(AuthContext);
@@ -31,7 +33,7 @@ export const useData = () => {
         dispatch(addMessages(response.data.messages));
       });
   }, []);
-  const socket = useMemo(() => io("http://localhost:3000"), []);
+  const socket = useMemo(() => io(serverUrl), []);
 
   useEffect(() => {
     const handleNewMessage = (message) => {

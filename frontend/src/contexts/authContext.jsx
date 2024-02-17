@@ -16,10 +16,7 @@ export function AuthProvider({ children }) {
 
   const login = async (values) => {
     try {
-      const result = await axios.post(
-        `http://${serverUrl}/api/v1/login`,
-        values,
-      );
+      const result = await axios.post(`${serverUrl}/api/v1/login`, values);
       const token = result.data.token;
       setUsername(result.data.username);
 
