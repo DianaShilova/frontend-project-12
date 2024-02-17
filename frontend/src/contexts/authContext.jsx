@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext({});
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -16,7 +17,7 @@ export function AuthProvider({ children }) {
   const login = async (values) => {
     try {
       const result = await axios.post(
-        "http://localhost:3000/api/v1/login",
+        `http://${serverUrl}/api/v1/login`,
         values,
       );
       const token = result.data.token;
