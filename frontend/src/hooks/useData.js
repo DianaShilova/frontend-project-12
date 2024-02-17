@@ -19,7 +19,6 @@ export const useData = () => {
   const dispatch = useDispatch();
   const authContext = useContext(AuthContext);
   const channelId = useSelector((store) => store.channels.currentChannelId);
-  const storemessages = useSelector((store) => store.messages.entities);
 
   useEffect(() => {
     axios
@@ -33,9 +32,18 @@ export const useData = () => {
         dispatch(addMessages(response.data.messages));
       });
   }, []);
-  const socket = useMemo(() => io(serverUrl), []);
+
+  const socket = useMemo(() => {
+    if (authContext.isAuthenticated) {
+      return io(serverUrl);
+    }
+    return null;
+  }, [authContext.isAuthenticated]);
 
   useEffect(() => {
+    if (!socket) {
+      return;
+    }
     const handleNewMessage = (message) => {
       dispatch(addMessage(message));
     };
@@ -65,7 +73,7 @@ export const useData = () => {
       socket.off("removeChannel", handleRemoveChannel);
       socket.off("renameChannel", handleEditChannel);
     };
-  }, []);
+  }, [socket]);
 
   const handleSetChannel = (id) => {
     dispatch(setChannel(id));
