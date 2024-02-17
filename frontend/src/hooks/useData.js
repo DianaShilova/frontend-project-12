@@ -17,6 +17,7 @@ export const useData = () => {
   const dispatch = useDispatch();
   const authContext = useContext(AuthContext);
   const channelId = useSelector((store) => store.channels.currentChannelId);
+  const storemessages = useSelector((store) => store.messages.entities);
 
   useEffect(() => {
     axios
@@ -46,7 +47,8 @@ export const useData = () => {
 
     const handleRemoveChannel = (channel) => {
       dispatch(removeChannel(channel.id));
-      // dispatch(removeMessages(channel.id))
+      handleSetChannel(1);
+      dispatch(removeMessages(channel.id));
     };
     socket.on("removeChannel", handleRemoveChannel);
 

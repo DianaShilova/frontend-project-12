@@ -11,7 +11,21 @@ const messagesSlice = createSlice({
     addMessage: messagesAdapter.addOne,
     addMessages: messagesAdapter.addMany,
     removeMessages: (state, { payload }) => {
-      messagesAdapter.removeMany(state, payload);
+      console.log("payload", payload);
+      let ids = state.ids.filter(
+        (id) => state.entities[id].channelId !== payload,
+      );
+      const entities = ids.reduce((result, id) => {
+        result[id] = state.entities[id];
+
+        return result;
+      }, {});
+
+      return {
+        ...state,
+        ids,
+        entities,
+      };
     },
     updateMessages: messagesAdapter.updateOne,
   },
