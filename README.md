@@ -1,4 +1,4 @@
-# [Chat Slack]
+# [Chat Slack](https://chatdish.onrender.com/)
 
 ### Hexlet tests and linter status:
 

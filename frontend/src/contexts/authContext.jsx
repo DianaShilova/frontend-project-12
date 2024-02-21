@@ -40,8 +40,18 @@ export function AuthProvider({ children }) {
     navigate("/login");
   };
 
+  const setToken = (data) => {
+    setUsername(data.username);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", data.username);
+
+    setIsAuthenticated(true);
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, username }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, login, logout, username, setToken }}
+    >
       {children}
     </AuthContext.Provider>
   );

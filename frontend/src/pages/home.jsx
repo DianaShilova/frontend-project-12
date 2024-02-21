@@ -155,7 +155,9 @@ export function HomePage() {
         <header>
           <nav>
             <div className="navbarcontainer">
-              <a>DISH Chat</a>
+              <a className="nav-login" href="/login">
+                DISH Chat
+              </a>
               <button onClick={authContext.logout}>Выйти</button>
             </div>
           </nav>
@@ -218,5 +220,3 @@ export function HomePage() {
       </>
     );
 }
-
-//4. отправить запрос на создание канала addChannel

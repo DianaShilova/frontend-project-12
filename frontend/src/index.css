@@ -37,16 +37,6 @@ code {
   gap: 100px;
 }
 
-.nikname {
-  margin: 10px;
-  padding: auto;
-}
-
-.password {
-  margin: 10px;
-  padding: auto;
-}
-
 .buttonSub {
   margin: 10px;
   align-self: flex-end;
@@ -97,4 +87,55 @@ a {
 .error-modal {
   color: rgba(208, 28, 12, 0.862);
   font-size: 14px;
+}
+
+.signup {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.signup-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20vh;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  border-radius: 6px;
+  padding: 50px;
+  width: 100vh;
+}
+
+.sugnup-image-container {
+}
+
+.signup-form-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  padding-left: 36px;
+}
+
+.signup-form-container h1 {
+  display: flex;
+  justify-content: center;
+}
+
+.signup-form-container input {
+  display: flex;
+  flex-direction: column;
+  margin: 0px !important;
+  height: 48px;
+}
+
+.signup-form-container button {
+  background-color: white;
+  border: 1px solid rgba(13, 110, 253);
+  border-radius: 3px;
+  color: rgba(13, 110, 253);
+  height: 5vh;
+  margin-left: 0px !important;
 }
