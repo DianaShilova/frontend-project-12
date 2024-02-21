@@ -2,8 +2,11 @@ import React, { useContext } from "react";
 import image from "../images/person.png";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Form, Formik, Field } from "formik";
+import FormBootstrap from "react-bootstrap/Form";
 import * as yup from "yup";
 import axios from "axios";
+import InputGroup from "react-bootstrap/InputGroup";
+import { useTranslation } from "react-i18next";
 import { AuthContext } from "../contexts/authContext";
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -11,23 +14,28 @@ const serverUrl = process.env.REACT_APP_SERVER_URL;
 export const SignupPage = () => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const schema = yup.object().shape({
     username: yup
       .string()
-      .required("Отсутствует имя")
-      .min(3, "От 3 до 20 символов")
-      .max(20, "От 3 до 20 символов"),
+      .min(3, t("signupForm.validation.username"))
+      .required(t("signupForm.validation.missField"))
+      .max(20, "signupForm.validation.username"),
     password: yup
       .string()
-      .required("Отсутствует пароль")
-      .min(6, "Не менее 6 символов"),
+      .required(t("signupForm.validation.missField"))
+      .min(6, t("signupForm.validation.password")),
     confirmPassword: yup
       .string()
-      .required("Пароли должны совпадать")
-      .test("same-password", "Пароли должны совпадать", (value, context) => {
-        return value === context.parent.password;
-      }),
+      .required(t("signupForm.validation.missField"))
+      .test(
+        "same-password",
+        t("signupForm.validation.confirmPassword"),
+        (value, context) => {
+          return value === context.parent.password;
+        },
+      ),
   });
 
   return (
@@ -44,7 +52,7 @@ export const SignupPage = () => {
       <div className="signup">
         <div className="signup-container">
           <div className="signup-image-container">
-            <img src={image} alt="регистрация"></img>
+            <img src={image} alt={t("image.registration")}></img>
           </div>
           <Formik
             initialValues={{
@@ -65,21 +73,22 @@ export const SignupPage = () => {
                 if (error.response.status === 409) {
                   formikBag.setFieldError(
                     "username",
-                    "Такой пользователь уже существует",
+                    t("signupForm.validation.userAlreadyExists"),
                   );
                 }
               }
             }}
           >
-            {({ errors, touched }) => (
+            {({ errors, touched, values, handleChange }) => (
               <Form className="signup-form-container">
-                <h1>Регистрация</h1>
+                <h1>{t("signupForm.registration")}</h1>
                 <div className="username input">
                   <label htmlFor="username"></label>
                   <Field
                     id="username"
                     name="username"
-                    placeholder="Имя пользователя"
+                    placeholder={t("signupForm.username")}
+                    required
                   />
                   {errors.username && touched.username && (
                     <div className="error">{errors.username}</div>
@@ -90,7 +99,7 @@ export const SignupPage = () => {
                   <Field
                     id="password"
                     name="password"
-                    placeholder="Пароль"
+                    placeholder={t("signupForm.password")}
                     type="password"
                   />
                   {errors.password && touched.password && (
@@ -102,16 +111,35 @@ export const SignupPage = () => {
                   <Field
                     id="confirmPassword"
                     name="confirmPassword"
-                    placeholder="Подтвердите пароль"
+                    placeholder={t("signupForm.confirmPassword")}
                     type="password"
                   />
                   {errors.confirmPassword && touched.confirmPassword && (
                     <div className="error">{errors.confirmPassword}</div>
                   )}
+                  {/* <FormBootstrap.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <FormBootstrap.Label>Email address</FormBootstrap.Label>
+                    <InputGroup hasValidation>
+                      <FormBootstrap.Control
+                        name="username"
+                        placeholder="name@example.com"
+                        value={values.username}
+                        isValid={touched.username && !errors.username}
+                        isInvalid={!!errors.username}
+                        onChange={handleChange}
+                      />
+                      <FormBootstrap.Control.Feedback type="invalid" tooltip>
+                        {errors.username}
+                      </FormBootstrap.Control.Feedback>
+                    </InputGroup>
+                  </FormBootstrap.Group> */}
                 </div>
                 <div></div>
                 <button className="buttonSub" type="submit">
-                  Зарегистрироваться
+                  {t("signupForm.register")}
                 </button>
               </Form>
             )}

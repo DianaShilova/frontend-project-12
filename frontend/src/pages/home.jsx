@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { ChannelModal } from "../components/ChannelModal";
 import { ChannelOption } from "../components/channelOption";
 import DeletingChannelModal from "../components/DeletingChannelModal";
+import { useTranslation } from "react-i18next";
 import "./home.css";
 
 export function HomePage() {
@@ -16,6 +17,7 @@ export function HomePage() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState(null);
+  const { t } = useTranslation();
 
   const {
     sendMessage,
@@ -40,15 +42,15 @@ export function HomePage() {
   const wordMessage = (messagesQuantity) => {
     const lastNumber = messagesQuantity % 10;
     if (messagesQuantity === 0) {
-      return "Сообщений";
+      return t("message.numeral.manyCase");
     }
     if (4 < messagesQuantity && messagesQuantity < 21) {
-      return "Сообщений";
+      return t("message.numeral.manyCase");
     } else if (lastNumber === 1) {
-      return "Сообщение";
+      return t("message.numeral.nominativeCase");
     } else if (1 < lastNumber && lastNumber < 5) {
-      return "Сообщения";
-    } else return "Сообщений";
+      return t("message.numeral.genitiveCase");
+    } else return t("message.numeral.manyCase");
   };
 
   const renderChannels = () => {
@@ -158,7 +160,7 @@ export function HomePage() {
               <a className="nav-login" href="/login">
                 DISH Chat
               </a>
-              <button onClick={authContext.logout}>Выйти</button>
+              <button onClick={authContext.logout}>{t("nav.exit")}</button>
             </div>
           </nav>
         </header>
@@ -166,7 +168,7 @@ export function HomePage() {
           <div className="body-container shadow">
             <section className="channels-container">
               <header className="channels-header">
-                <b>Каналы</b>
+                <b>{t("channelsContainer.channel")}</b>
                 <button className="channels-add" onClick={handleAddChannel}>
                   +
                 </button>
@@ -193,14 +195,12 @@ export function HomePage() {
                 <div className="messages-input-wrapper">
                   <input
                     className="messages-input"
-                    placeholder="Введите сообщение..."
+                    placeholder={t("message.messagesPlaceholder")}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     required
                   />
-                  <button className="messages-send">
-                    {isSending ? "Sending" : "Send"}
-                  </button>
+                  <button className="messages-send"></button>
                 </div>
               </form>
             </section>

@@ -4,11 +4,13 @@ import image from "../images/person.png";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
 import { Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const LoginPage = () => {
+  const { t } = useTranslation();
   const schema = yup.object().shape({
-    username: yup.string().required("Отсутствует имя"),
-    password: yup.string().required("Отсутствует пароль"),
+    username: yup.string().required(t("loginForm.validationLogin.empty")),
+    password: yup.string().required(t("loginForm.validationLogin.empty")),
   });
 
   const authContext = useContext(AuthContext);
@@ -24,17 +26,16 @@ export const LoginPage = () => {
               <a className="nav-login" href="/login">
                 DISH Chat
               </a>
-              <button onClick={authContext.logout}>Выйти</button>
             </div>
           </nav>
         </header>
         <div className="card-shadow">
           <div className="card-body">
             <div className="img">
-              <img src={image} alt="Войти"></img>
+              <img src={image} alt={t(image.login)}></img>
             </div>
             <div>
-              <h1 className="text-center mb-4">Войти</h1>
+              <h1 className="text-center mb-4">{t("loginForm.enter")}</h1>
               <Formik
                 initialValues={{
                   username: "",
@@ -56,7 +57,7 @@ export const LoginPage = () => {
                       <Field
                         id="username"
                         name="username"
-                        placeholder="Ваш ник"
+                        placeholder={t("loginForm.nickname")}
                       />
                       {errors.username && touched.username && (
                         <div className="error">{errors.username}</div>
@@ -67,7 +68,7 @@ export const LoginPage = () => {
                       <Field
                         id="password"
                         name="password"
-                        placeholder="Пароль"
+                        placeholder={t("loginForm.password")}
                       />
                       {errors.password && touched.password && (
                         <div className="error">{errors.password}</div>
@@ -75,7 +76,7 @@ export const LoginPage = () => {
                     </div>
                     <div></div>
                     <button className="buttonSub" type="submit">
-                      Войти
+                      {t("loginForm.enter")}
                     </button>
                   </Form>
                 )}
@@ -84,8 +85,8 @@ export const LoginPage = () => {
           </div>
           <div className="card footer">
             <div className="registration">
-              <span>Нет аккаунта?</span>
-              <a href="/signup">Регистрация</a>
+              <span>{t("footer.haveNotAccount")}</span>
+              <a href="/signup">{t("footer.registration")}</a>
             </div>
           </div>
         </div>
