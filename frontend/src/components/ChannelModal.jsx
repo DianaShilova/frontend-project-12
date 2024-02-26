@@ -3,9 +3,9 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Formik, Field } from "formik";
 import { useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
+import filter from "leo-profanity";
 
 export const ChannelModal = (props) => {
   const { isOpen, onClose, onSubmit, id } = props;
@@ -27,7 +27,6 @@ export const ChannelModal = (props) => {
     const existingChannel = channelsArr.find(
       (ch) => ch.name === values.channelName,
     );
-
     if (!channel && existingChannel) {
       errors.name = t("addModal.validationModal.alreadyExists");
     }
@@ -58,7 +57,6 @@ export const ChannelModal = (props) => {
                   {id ? t("editModal.editChannel") : t("addModal.addChannel")}
                 </Modal.Title>
               </Modal.Header>
-
               <Modal.Body>
                 <Field
                   className="modal-input"

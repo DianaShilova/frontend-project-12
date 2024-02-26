@@ -8,22 +8,34 @@ import { SignupPage } from "../pages/signup.jsx";
 import { AuthProvider } from "../contexts/authContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import store from "../slices/index.js";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <AuthProvider>
-          <Routes>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="signup" element={<SignupPage />} />
-          </Routes>
-        </AuthProvider>
-      </Provider>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Provider store={store}>
+          <AuthProvider>
+            <Routes>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="*" element={<NotFoundPage />} />
+              <Route path="signup" element={<SignupPage />} />
+            </Routes>
+          </AuthProvider>
+        </Provider>
+      </BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
   );
 }
 
