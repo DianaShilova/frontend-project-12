@@ -8,6 +8,8 @@ import { ChannelModal } from "../components/ChannelModal";
 import { ChannelOption } from "../components/channelOption";
 import DeletingChannelModal from "../components/DeletingChannelModal";
 import { useTranslation } from "react-i18next";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./home.css";
 
 export function HomePage() {
@@ -84,6 +86,7 @@ export function HomePage() {
   const handleDeleteChannel = async () => {
     try {
       await deleteChannel(selectedChannel);
+      toast.success(t("delete"));
     } catch {
       console.log("error");
     } finally {
@@ -105,7 +108,7 @@ export function HomePage() {
     e.preventDefault();
     setIsSending(true);
     try {
-      const result = await sendMessage(input);
+      await sendMessage(input);
       setIsSending(false);
       setInput("");
     } catch (e) {
@@ -117,8 +120,10 @@ export function HomePage() {
     try {
       if (!selectedChannel) {
         await sendChannel(values.channelName);
+        toast.success(t("add"));
       } else {
         await renameChannel(selectedChannel, values.channelName);
+        toast.success(t("rename"));
       }
       handleCloseChannelModal();
       setSelectedChannel(null);
@@ -216,6 +221,18 @@ export function HomePage() {
           onSubmit={handleDeleteChannel}
           isOpen={isOpenModalDelete}
           onClose={handleCloseDeleteModal}
+        />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
         />
       </>
     );

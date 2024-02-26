@@ -1,6 +1,9 @@
 import { createContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AuthContext = createContext({});
 const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -13,6 +16,7 @@ export function AuthProvider({ children }) {
     localStorage.getItem("username"),
   );
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const login = async (values) => {
     try {
@@ -26,11 +30,12 @@ export function AuthProvider({ children }) {
       setIsAuthenticated(true);
       navigate("/");
     } catch (error) {
-      console.log(error);
       if (error.response && error.response.status === 401) {
-        throw new Error("Неправильный логин/пароль");
+        throw new Error(t("loginForm.validationLogin.error"));
       }
-      throw new Error(" Неизвестная ошибка");
+      if (error.code === "ERR_NETWORK") {
+        toast.error(t("loginForm.validationLogin.network"));
+      }
     }
   };
 
@@ -49,10 +54,24 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ isAuthenticated, login, logout, username, setToken }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <>
+      <AuthContext.Provider
+        value={{ isAuthenticated, login, logout, username, setToken }}
+      >
+        {children}
+      </AuthContext.Provider>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
   );
 }

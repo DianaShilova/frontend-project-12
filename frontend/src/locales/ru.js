@@ -12,6 +12,8 @@ export default {
       validationLogin: {
         empty: "Обязательное поле",
         error: "Неверное имя пользователя или пароль",
+        unknown: "Неизвестная ошибка",
+        network: "Ошибка сети",
       },
     },
     signupForm: {
@@ -71,5 +73,8 @@ export default {
       login: "Войти",
     },
     notFoundPage: "404 - страница не найдена",
+    delete: "Канал удалeн",
+    add: "Канал добавлен",
+    rename: "Канал переименован",
   },
 };

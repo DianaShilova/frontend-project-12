@@ -3,12 +3,16 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Formik, Field } from "formik";
 import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import { useTranslation } from "react-i18next";
+import "react-toastify/dist/ReactToastify.css";
 
 export const ChannelModal = (props) => {
   const { isOpen, onClose, onSubmit, id } = props;
   const channels = useSelector((store) => store.channels.entities);
   const inputEl = useRef(null);
   const channel = useSelector((store) => store.channels.entities[id]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isOpen) {
@@ -25,10 +29,10 @@ export const ChannelModal = (props) => {
     );
 
     if (!channel && existingChannel) {
-      errors.name = "Такой канал уже существует";
+      errors.name = t("addModal.validationModal.alreadyExists");
     }
     if (!values.channelName) {
-      errors.name = "Обязательное поле";
+      errors.name = t("addModal.validationModal.required");
     }
     return errors;
   };
@@ -51,7 +55,7 @@ export const ChannelModal = (props) => {
             <form onSubmit={handleSubmit(values)}>
               <Modal.Header closeButton>
                 <Modal.Title>
-                  {id ? "Переименовать канал" : "Добавить канал"}
+                  {id ? t("editModal.editChannel") : t("addModal.addChannel")}
                 </Modal.Title>
               </Modal.Header>
 
@@ -70,14 +74,14 @@ export const ChannelModal = (props) => {
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>
-                  Отменить
+                  {t("addModal.cancel")}
                 </Button>
                 <Button
                   type="submit"
                   disabled={errors.name ? true : false}
                   variant="primary"
                 >
-                  Отправить
+                  {t("addModal.send")}
                 </Button>
               </Modal.Footer>
             </form>
@@ -87,7 +91,3 @@ export const ChannelModal = (props) => {
     </div>
   );
 };
-
-//1. добавить formik
-//2. yup валидация
-//3. список каналов для уникальности канала

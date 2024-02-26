@@ -7,6 +7,7 @@ import { NotFoundPage } from "../pages/notfound";
 import { SignupPage } from "../pages/signup.jsx";
 import { AuthProvider } from "../contexts/authContext";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer } from "react-toastify";
 import store from "../slices/index.js";
 
 function App() {
