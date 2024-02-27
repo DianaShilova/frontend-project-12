@@ -10,11 +10,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import store from "../slices/index.js";
-import { ProviderRollbar, ErrorBoundary } from "@rollbar/react";
+import { Provider as ProviderRollbar, ErrorBoundary } from "@rollbar/react";
 
 const rollbarConfig = {
   accessToken: "efa0e36235e941d2a3b8ced681bc22a2",
-  environment: "testenv",
+  environment: process.env.NODE_ENV === "development" ? "dev" : "prod",
 };
 
 function App() {

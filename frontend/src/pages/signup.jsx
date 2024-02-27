@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 import image from "../images/person.png";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Formik, Field } from "formik";
-import FormBootstrap from "react-bootstrap/Form";
 import * as yup from "yup";
 import axios from "axios";
-import InputGroup from "react-bootstrap/InputGroup";
 import { useTranslation } from "react-i18next";
 import { AuthContext } from "../contexts/authContext";
 
