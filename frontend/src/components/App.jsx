@@ -10,22 +10,32 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import store from "../slices/index.js";
+import { ProviderRollbar, ErrorBoundary } from "@rollbar/react";
+
+const rollbarConfig = {
+  accessToken: "efa0e36235e941d2a3b8ced681bc22a2",
+  environment: "testenv",
+};
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Provider store={store}>
-          <AuthProvider>
-            <Routes>
-              <Route path="login" element={<LoginPage />} />
-              <Route path="/" element={<HomePage />} />
-              <Route path="*" element={<NotFoundPage />} />
-              <Route path="signup" element={<SignupPage />} />
-            </Routes>
-          </AuthProvider>
-        </Provider>
-      </BrowserRouter>
+      <ProviderRollbar config={rollbarConfig}>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <Provider store={store}>
+              <AuthProvider>
+                <Routes>
+                  <Route path="login" element={<LoginPage />} />
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                  <Route path="signup" element={<SignupPage />} />
+                </Routes>
+              </AuthProvider>
+            </Provider>
+          </BrowserRouter>
+        </ErrorBoundary>
+      </ProviderRollbar>
       <ToastContainer
         position="top-right"
         autoClose={5000}
