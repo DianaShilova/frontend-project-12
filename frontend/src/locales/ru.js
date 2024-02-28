@@ -11,9 +11,9 @@ export default {
       password: "Пароль",
       validationLogin: {
         empty: "Обязательное поле",
-        error: "Неверное имя пользователя или пароль",
+        error: "Неверные имя пользователя или пароль",
         unknown: "Неизвестная ошибка",
-        network: "Ошибка сети",
+        network: "Ошибка соединения",
       },
     },
     signupForm: {
@@ -24,7 +24,7 @@ export default {
       register: "Зарегистрироваться",
       validation: {
         missField: "Обязательное поле",
-        username: "от 3 до 20 символов",
+        username: "От 3 до 20 символов",
         password: "Не менее 6 символов",
         confirmPassword: "Пароли должны совпадать",
         userAlreadyExists: "Такой пользователь уже существует",
@@ -73,8 +73,8 @@ export default {
       login: "Войти",
     },
     notFoundPage: "404 - страница не найдена",
-    delete: "Канал удалeн",
-    add: "Канал добавлен",
+    delete: "Канал удалён",
+    add: "Канал создан",
     rename: "Канал переименован",
   },
 };

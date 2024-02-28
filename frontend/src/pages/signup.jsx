@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import image from "../images/person.png";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, Field } from "formik";
+import FormBootstrap from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import * as yup from "yup";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
@@ -47,7 +49,7 @@ export const SignupPage = () => {
           </div>
         </nav>
       </header>
-      <div className="signup">
+      <div className="sign">
         <div className="signup-container">
           <div className="signup-image-container">
             <img src={image} alt={t("image.registration")}></img>
@@ -80,63 +82,65 @@ export const SignupPage = () => {
             {({ errors, touched, values, handleChange }) => (
               <Form className="signup-form-container">
                 <h1>{t("signupForm.registration")}</h1>
-                <div className="username input">
-                  <label htmlFor="username"></label>
-                  <Field
-                    id="username"
-                    name="username"
-                    placeholder={t("signupForm.username")}
-                    required
-                  />
-                  {errors.username && touched.username && (
-                    <div className="error">{errors.username}</div>
-                  )}
-                </div>
-                <div className="password input">
-                  <label htmlFor="password"></label>
-                  <Field
-                    id="password"
-                    name="password"
-                    placeholder={t("signupForm.password")}
-                    type="password"
-                  />
-                  {errors.password && touched.password && (
-                    <div className="error">{errors.password}</div>
-                  )}
-                </div>
-                <div className="confirmPassword input">
-                  <label htmlFor="confirmPassword"></label>
-                  <Field
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    placeholder={t("signupForm.confirmPassword")}
-                    type="password"
-                  />
-                  {errors.confirmPassword && touched.confirmPassword && (
-                    <div className="error">{errors.confirmPassword}</div>
-                  )}
-                  {/* <FormBootstrap.Group
-                    className="mb-3"
-                    controlId="exampleForm.ControlInput1"
-                  >
-                    <FormBootstrap.Label>Email address</FormBootstrap.Label>
-                    <InputGroup hasValidation>
-                      <FormBootstrap.Control
-                        name="username"
-                        placeholder="name@example.com"
-                        value={values.username}
-                        isValid={touched.username && !errors.username}
-                        isInvalid={!!errors.username}
-                        onChange={handleChange}
-                      />
-                      <FormBootstrap.Control.Feedback type="invalid" tooltip>
-                        {errors.username}
-                      </FormBootstrap.Control.Feedback>
-                    </InputGroup>
-                  </FormBootstrap.Group> */}
-                </div>
-                <div></div>
-                <button className="buttonSub" type="submit">
+                <FormBootstrap.Group
+                  className="username input mb-3"
+                  controlId="username"
+                >
+                  <InputGroup hasValidation>
+                    <FormBootstrap.Control
+                      name="username"
+                      placeholder={t("signupForm.username")}
+                      value={values.username}
+                      isValid={touched.username && !errors.username}
+                      isInvalid={!!errors.username}
+                      onChange={handleChange}
+                    />
+                    <FormBootstrap.Control.Feedback type="invalid" tooltip>
+                      {errors.username}
+                    </FormBootstrap.Control.Feedback>
+                  </InputGroup>
+                </FormBootstrap.Group>
+                <FormBootstrap.Group
+                  className="password input mb-3"
+                  controlId="password"
+                >
+                  <InputGroup hasValidation>
+                    <FormBootstrap.Control
+                      name="password"
+                      placeholder={t("signupForm.password")}
+                      value={values.password}
+                      isValid={touched.password && !errors.password}
+                      isInvalid={!!errors.password}
+                      onChange={handleChange}
+                      type="password"
+                    />
+                    <FormBootstrap.Control.Feedback type="invalid" tooltip>
+                      {errors.password}
+                    </FormBootstrap.Control.Feedback>
+                  </InputGroup>
+                </FormBootstrap.Group>
+                <FormBootstrap.Group
+                  className="confirmPassword input mb-3"
+                  controlId="confirmPassword"
+                >
+                  <InputGroup hasValidation>
+                    <FormBootstrap.Control
+                      name="confirmPassword"
+                      placeholder={t("signupForm.confirmPassword")}
+                      value={values.confirmPassword}
+                      isValid={
+                        touched.confirmPassword && !errors.confirmPassword
+                      }
+                      isInvalid={!!errors.confirmPassword}
+                      onChange={handleChange}
+                      type="password"
+                    />
+                    <FormBootstrap.Control.Feedback type="invalid" tooltip>
+                      {errors.confirmPassword}
+                    </FormBootstrap.Control.Feedback>
+                  </InputGroup>
+                </FormBootstrap.Group>
+                <button className="buttonSign" type="submit">
                   {t("signupForm.register")}
                 </button>
               </Form>

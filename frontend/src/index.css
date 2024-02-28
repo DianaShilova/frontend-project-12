@@ -27,16 +27,6 @@ code {
   color: red;
 }
 
-.card-body {
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: auto;
-  gap: 100px;
-}
-
 .buttonSub {
   margin: 10px;
   align-self: flex-end;
@@ -44,7 +34,7 @@ code {
   width: 88%;
 }
 
-a {
+.nav-login {
   font-size: 20px;
   font-weight: 500;
   box-sizing: border-box;
@@ -89,10 +79,11 @@ a {
   font-size: 14px;
 }
 
-.signup {
+.sign {
   width: 100vw;
   display: flex;
   justify-content: center;
+  margin-top: 20vh;
 }
 
 .signup-container {
@@ -100,7 +91,6 @@ a {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20vh;
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
   border-radius: 6px;
@@ -108,7 +98,25 @@ a {
   width: 100vh;
 }
 
-.sugnup-image-container {
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  border-radius: 6px;
+  padding: 50px;
+  width: 100vh;
+}
+.card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px !important;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  width: 100vh;
 }
 
 .signup-form-container {
@@ -129,13 +137,38 @@ a {
   flex-direction: column;
   margin: 0px !important;
   height: 48px;
+  color: black;
 }
 
-.signup-form-container button {
+.buttonSign {
   background-color: white;
   border: 1px solid rgba(13, 110, 253);
   border-radius: 3px;
   color: rgba(13, 110, 253);
   height: 5vh;
-  margin-left: 0px !important;
+}
+
+/* .in {
+  height: 100vw;
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+} */
+
+.signin {
+  padding: 0 !important;
+}
+.card-footer {
+  box-sizing: border-box;
+  padding: 1.5rem !important;
+  background-color: rgb(249 249 249) !important;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-radius: 5px;
+  border-top: 1px solid rgb(214 214 214);
+}
+.registration {
+  text-align: center;
 }
