@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import image from "../images/person.png";
 import { useNavigate } from "react-router-dom";
-import { Form, Formik, Field } from "formik";
+import { Form, Formik } from "formik";
 import FormBootstrap from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import * as yup from "yup";

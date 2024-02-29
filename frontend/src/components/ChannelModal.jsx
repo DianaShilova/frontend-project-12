@@ -5,7 +5,6 @@ import { Formik, Field } from "formik";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
-import filter from "leo-profanity";
 
 export const ChannelModal = (props) => {
   const { isOpen, onClose, onSubmit, id } = props;

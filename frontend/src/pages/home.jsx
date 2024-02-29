@@ -8,7 +8,7 @@ import { ChannelModal } from "../components/ChannelModal";
 import { ChannelOption } from "../components/channelOption";
 import DeletingChannelModal from "../components/DeletingChannelModal";
 import { useTranslation } from "react-i18next";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import filter from "leo-profanity";
 
 import "./home.css";
@@ -16,7 +16,6 @@ import "./home.css";
 export function HomePage() {
   const authContext = useContext(AuthContext);
   const [input, setInput] = useState("");
-  const [isSending, setIsSending] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState(null);
@@ -107,10 +106,8 @@ export function HomePage() {
 
   const handleSubmitMessage = async (e) => {
     e.preventDefault();
-    setIsSending(true);
     try {
       await sendMessage(filter.clean(input));
-      setIsSending(false);
       setInput("");
     } catch (e) {
       console.log("error", e);

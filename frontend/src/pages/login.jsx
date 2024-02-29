@@ -1,4 +1,4 @@
-import { Formik, Field, Form } from "formik";
+import { Formik, Form } from "formik";
 import * as yup from "yup";
 import image from "../images/person.png";
 import { useContext } from "react";
