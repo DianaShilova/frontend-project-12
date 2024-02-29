@@ -12,3 +12,5 @@ start-backend:
 
 start:
 	make start-backend & make start-frontend
+build:
+	npm install && ./frontend && npm install && npm run build
