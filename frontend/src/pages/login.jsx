@@ -26,7 +26,7 @@ export const LoginPage = () => {
           <nav>
             <div className="navbarcontainer">
               <a className="nav-login" href="/login">
-                DISH Chat
+                Hexlet chat
               </a>
             </div>
           </nav>

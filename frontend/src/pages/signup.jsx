@@ -44,7 +44,7 @@ export const SignupPage = () => {
         <nav>
           <div className="navbarcontainer">
             <a className="nav-login" href="/login">
-              DISH Chat
+              Hexlet chat
             </a>
           </div>
         </nav>

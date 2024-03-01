@@ -161,7 +161,7 @@ export function HomePage() {
           <nav>
             <div className="navbarcontainer">
               <a className="nav-login" href="/login">
-                DISH Chat
+                Hexlet chat
               </a>
               <button onClick={authContext.logout}>{t("nav.exit")}</button>
             </div>
