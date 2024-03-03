@@ -19,7 +19,7 @@ const DeletingChannelModal = (props) => {
           <Button variant="secondary" onClick={onClose}>
             Отменить
           </Button>
-          <Button variant="primary" onClick={handleDeleteClick}>
+          <Button variant="danger" onClick={handleDeleteClick}>
             Удалить
           </Button>
         </Modal.Footer>

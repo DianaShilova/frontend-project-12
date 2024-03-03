@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import FormBootstrap from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 
 export const LoginPage = () => {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ export const LoginPage = () => {
           <nav>
             <div className="navbarcontainer">
               <a className="nav-login" href="/login">
-                Hexlet chat
+                Hexlet Chat
               </a>
             </div>
           </nav>
@@ -61,17 +62,26 @@ export const LoginPage = () => {
                       controlId="username"
                     >
                       <InputGroup hasValidation>
-                        <FormBootstrap.Control
-                          name="username"
-                          placeholder={t("loginForm.nickname")}
-                          value={values.username}
-                          isValid={touched.username && !errors.username}
-                          isInvalid={!!errors.username}
-                          onChange={handleChange}
-                        />
-                        <FormBootstrap.Control.Feedback type="invalid" tooltip>
-                          {errors.username}
-                        </FormBootstrap.Control.Feedback>
+                        <FloatingLabel
+                          controlId="username"
+                          label={t("loginForm.nickname")}
+                          className="mb-3"
+                        >
+                          <FormBootstrap.Control
+                            name="username"
+                            placeholder={t("loginForm.nickname")}
+                            value={values.username}
+                            isValid={touched.username && !errors.username}
+                            isInvalid={!!errors.username}
+                            onChange={handleChange}
+                          />
+                          <FormBootstrap.Control.Feedback
+                            type="invalid"
+                            tooltip
+                          >
+                            {errors.username}
+                          </FormBootstrap.Control.Feedback>
+                        </FloatingLabel>
                       </InputGroup>
                     </FormBootstrap.Group>
                     <FormBootstrap.Group
@@ -79,18 +89,27 @@ export const LoginPage = () => {
                       controlId="password"
                     >
                       <InputGroup hasValidation>
-                        <FormBootstrap.Control
-                          name="password"
-                          placeholder={t("loginForm.password")}
-                          value={values.password}
-                          isValid={touched.password && !errors.password}
-                          isInvalid={!!errors.password}
-                          onChange={handleChange}
-                          type="password"
-                        />
-                        <FormBootstrap.Control.Feedback type="invalid" tooltip>
-                          {errors.password}
-                        </FormBootstrap.Control.Feedback>
+                        <FloatingLabel
+                          controlId="password"
+                          label={t("loginForm.password")}
+                          className="mb-3"
+                        >
+                          <FormBootstrap.Control
+                            name="password"
+                            placeholder={t("loginForm.password")}
+                            value={values.password}
+                            isValid={touched.password && !errors.password}
+                            isInvalid={!!errors.password}
+                            onChange={handleChange}
+                            type="password"
+                          />
+                          <FormBootstrap.Control.Feedback
+                            type="invalid"
+                            tooltip
+                          >
+                            {errors.password}
+                          </FormBootstrap.Control.Feedback>
+                        </FloatingLabel>
                       </InputGroup>
                     </FormBootstrap.Group>
                     <button className="buttonSign" type="submit">

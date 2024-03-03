@@ -37,14 +37,17 @@ export default {
       addChannel: "Добавить канал",
       cancel: "Отменить",
       send: "Отправить",
+      channelName: "Имя канала",
       validationModal: {
         required: "Обязательное поле",
         alreadyExists: "Такой канал уже существует",
+        minMax: "От 3 до 20 символов",
       },
     },
     editModal: {
       editChannel: "Переименовать канал",
       alreadyExists: "Такой канал уже существует",
+      edit: "Управление каналом",
     },
     deleteModal: {
       deleteChannel: "Удалить канал",

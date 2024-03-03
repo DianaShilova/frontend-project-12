@@ -8,6 +8,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { AuthContext } from "../contexts/authContext";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -44,7 +45,7 @@ export const SignupPage = () => {
         <nav>
           <div className="navbarcontainer">
             <a className="nav-login" href="/login">
-              Hexlet chat
+              Hexlet Chat
             </a>
           </div>
         </nav>
@@ -87,17 +88,23 @@ export const SignupPage = () => {
                   controlId="username"
                 >
                   <InputGroup hasValidation>
-                    <FormBootstrap.Control
-                      name="username"
-                      placeholder={t("signupForm.username")}
-                      value={values.username}
-                      isValid={touched.username && !errors.username}
-                      isInvalid={!!errors.username}
-                      onChange={handleChange}
-                    />
-                    <FormBootstrap.Control.Feedback type="invalid" tooltip>
-                      {errors.username}
-                    </FormBootstrap.Control.Feedback>
+                    <FloatingLabel
+                      controlId="username"
+                      label={t("signupForm.username")}
+                      className="mb-3"
+                    >
+                      <FormBootstrap.Control
+                        name="username"
+                        placeholder={t("signupForm.username")}
+                        value={values.username}
+                        isValid={touched.username && !errors.username}
+                        isInvalid={!!errors.username}
+                        onChange={handleChange}
+                      />
+                      <FormBootstrap.Control.Feedback type="invalid" tooltip>
+                        {errors.username}
+                      </FormBootstrap.Control.Feedback>
+                    </FloatingLabel>
                   </InputGroup>
                 </FormBootstrap.Group>
                 <FormBootstrap.Group
@@ -105,18 +112,24 @@ export const SignupPage = () => {
                   controlId="password"
                 >
                   <InputGroup hasValidation>
-                    <FormBootstrap.Control
-                      name="password"
-                      placeholder={t("signupForm.password")}
-                      value={values.password}
-                      isValid={touched.password && !errors.password}
-                      isInvalid={!!errors.password}
-                      onChange={handleChange}
-                      type="password"
-                    />
-                    <FormBootstrap.Control.Feedback type="invalid" tooltip>
-                      {errors.password}
-                    </FormBootstrap.Control.Feedback>
+                    <FloatingLabel
+                      controlId="password"
+                      label={t("signupForm.password")}
+                      className="mb-3"
+                    >
+                      <FormBootstrap.Control
+                        name="password"
+                        placeholder={t("signupForm.password")}
+                        value={values.password}
+                        isValid={touched.password && !errors.password}
+                        isInvalid={!!errors.password}
+                        onChange={handleChange}
+                        type="password"
+                      />
+                      <FormBootstrap.Control.Feedback type="invalid" tooltip>
+                        {errors.password}
+                      </FormBootstrap.Control.Feedback>
+                    </FloatingLabel>
                   </InputGroup>
                 </FormBootstrap.Group>
                 <FormBootstrap.Group
@@ -124,20 +137,26 @@ export const SignupPage = () => {
                   controlId="confirmPassword"
                 >
                   <InputGroup hasValidation>
-                    <FormBootstrap.Control
-                      name="confirmPassword"
-                      placeholder={t("signupForm.confirmPassword")}
-                      value={values.confirmPassword}
-                      isValid={
-                        touched.confirmPassword && !errors.confirmPassword
-                      }
-                      isInvalid={!!errors.confirmPassword}
-                      onChange={handleChange}
-                      type="password"
-                    />
-                    <FormBootstrap.Control.Feedback type="invalid" tooltip>
-                      {errors.confirmPassword}
-                    </FormBootstrap.Control.Feedback>
+                    <FloatingLabel
+                      controlId="confirmPassword"
+                      label={t("signupForm.confirmPassword")}
+                      className="mb-3"
+                    >
+                      <FormBootstrap.Control
+                        name="confirmPassword"
+                        placeholder={t("signupForm.confirmPassword")}
+                        value={values.confirmPassword}
+                        isValid={
+                          touched.confirmPassword && !errors.confirmPassword
+                        }
+                        isInvalid={!!errors.confirmPassword}
+                        onChange={handleChange}
+                        type="password"
+                      />
+                      <FormBootstrap.Control.Feedback type="invalid" tooltip>
+                        {errors.confirmPassword}
+                      </FormBootstrap.Control.Feedback>
+                    </FloatingLabel>
                   </InputGroup>
                 </FormBootstrap.Group>
                 <button className="buttonSign" type="submit">

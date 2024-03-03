@@ -66,6 +66,7 @@ export function HomePage() {
           >
             <button
               className="channels-button"
+              name={channels.entities[id].name}
               onClick={() => handleSetChannel(id)}
             >
               # {channels.entities[id].name}
@@ -161,7 +162,7 @@ export function HomePage() {
           <nav>
             <div className="navbarcontainer">
               <a className="nav-login" href="/login">
-                Hexlet chat
+                Hexlet Chat
               </a>
               <button onClick={authContext.logout}>{t("nav.exit")}</button>
             </div>
@@ -198,6 +199,7 @@ export function HomePage() {
                 <div className="messages-input-wrapper">
                   <input
                     className="messages-input"
+                    aria-label="Новое сообщение"
                     placeholder={t("message.messagesPlaceholder")}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
