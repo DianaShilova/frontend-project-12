@@ -51,7 +51,6 @@ export const useData = () => {
 
     const handleNewChannel = (channel) => {
       dispatch(addChannel(channel));
-      handleSetChannel(channel.id);
     };
     socket.on("newChannel", handleNewChannel);
 
@@ -102,8 +101,8 @@ export const useData = () => {
         {
           name: channelName,
         },
-        () => {
-          resolve();
+        (response) => {
+          resolve(response.data);
         },
       );
     });

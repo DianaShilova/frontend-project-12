@@ -204,8 +204,8 @@ test.describe("two users chatting", () => {
     await page2.goto("http://localhost:5001");
 
     await page2.locator("text=Hexlet Chat").first().click();
-    await page2.locator("text=Ваш ник").first().type(user.login);
-    await page2.locator("text=/^Пароль$/").first().type(user.password);
+    await page2.locator("text=Ваш ник").first().type("user");
+    await page2.locator("text=/^Пароль$/").first().type("user123");
     await page2.locator('button[type="submit"]').first().click();
   });
 

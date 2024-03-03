@@ -2,10 +2,11 @@ import React, { useRef, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
+import { useData } from "../hooks/useData";
 
 export const ChannelModal = (props) => {
   const { isOpen, onClose, onSubmit, id } = props;
@@ -13,6 +14,7 @@ export const ChannelModal = (props) => {
   const inputEl = useRef(null);
   const channel = useSelector((store) => store.channels.entities[id]);
   const { t } = useTranslation();
+  const { handleSetChannel } = useData();
 
   useEffect(() => {
     if (isOpen) {

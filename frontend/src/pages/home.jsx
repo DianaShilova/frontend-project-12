@@ -65,9 +65,15 @@ export function HomePage() {
             }
           >
             <button
-              className="channels-button"
+              className={
+                currentChannelId === id
+                  ? "w-100 rounded-0 text-start text-truncate btn btn-secondary"
+                  : "channels-button"
+              }
               name={channels.entities[id].name}
               onClick={() => handleSetChannel(id)}
+              id={channels.entities[id].name}
+              type="button"
             >
               # {channels.entities[id].name}
             </button>
@@ -118,7 +124,8 @@ export function HomePage() {
   const handleSubmitChannel = async (values) => {
     try {
       if (!selectedChannel) {
-        await sendChannel(filter.clean(values.channelName));
+        const data = await sendChannel(filter.clean(values.channelName));
+        handleSetChannel(data.id);
         toast.success(t("add"));
       } else {
         await renameChannel(selectedChannel, filter.clean(values.channelName));
