@@ -75,7 +75,8 @@ export function HomePage() {
               id={channels.entities[id].name}
               type="button"
             >
-              # {channels.entities[id].name}
+              <span class="me-1">#</span>
+              {channels.entities[id].name}
             </button>
             {channels.entities[id].removable && (
               <ChannelOption
