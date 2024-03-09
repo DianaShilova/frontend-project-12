@@ -12,6 +12,7 @@ import { addMessages, removeMessages } from "../slices/messagesSlice.js";
 import { addMessage } from "../slices/messagesSlice.js";
 import { io } from "socket.io-client";
 import { AuthContext } from "../contexts/authContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -19,17 +20,25 @@ export const useData = () => {
   const dispatch = useDispatch();
   const authContext = useContext(AuthContext);
   const channelId = useSelector((store) => store.channels.currentChannelId);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("/api/v1/data", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    };
+
+    const channelsRequest = axios.get("/api/v1/channels", { headers });
+    const messagesRequest = axios.get("/api/v1/messages", { headers });
+
+    Promise.all([channelsRequest, messagesRequest])
+      .then(([channelsData, messagesData]) => {
+        dispatch(addChannels(channelsData.data));
+        dispatch(addMessages(messagesData.data));
       })
-      .then((response) => {
-        dispatch(addChannels(response.data.channels));
-        dispatch(addMessages(response.data.messages));
+      .catch((error) => {
+        if (error.statusCode === 401) {
+          navigate("/login");
+        }
       });
   }, []);
 
@@ -42,7 +51,7 @@ export const useData = () => {
 
   useEffect(() => {
     if (!socket) {
-      return;
+      return navigate("/login");
     }
     const handleNewMessage = (message) => {
       dispatch(addMessage(message));
