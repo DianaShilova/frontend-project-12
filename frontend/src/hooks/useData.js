@@ -43,7 +43,7 @@ export const useData = () => {
 
   const socket = useMemo(() => {
     if (authContext.isAuthenticated) {
-      return io("http://localhost:5001");
+      return io();
     }
     return null;
   }, [authContext.isAuthenticated]);
