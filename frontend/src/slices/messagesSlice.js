@@ -11,7 +11,6 @@ const messagesSlice = createSlice({
     addMessage: messagesAdapter.addOne,
     addMessages: messagesAdapter.addMany,
     removeMessages: (state, { payload }) => {
-      console.log("payload", payload);
       let ids = state.ids.filter(
         (id) => state.entities[id].channelId !== payload,
       );

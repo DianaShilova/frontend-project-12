@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { clearChannels } from "../slices/channelsSlice";
+import { useDispatch } from "react-redux";
 
 export const AuthContext = createContext({});
-const serverUrl = process.env.REACT_APP_SERVER_URL;
+// const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -17,10 +19,10 @@ export function AuthProvider({ children }) {
   );
   const navigate = useNavigate();
   const { t } = useTranslation();
-
+  const dispatch = useDispatch();
   const login = async (values) => {
     try {
-      const result = await axios.post(`${serverUrl}/api/v1/login`, values);
+      const result = await axios.post(`/api/v1/login`, values);
       const token = result.data.token;
       setUsername(result.data.username);
 
@@ -42,6 +44,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setIsAuthenticated(false);
     localStorage.clear();
+    dispatch(clearChannels());
     navigate("/login");
   };
 

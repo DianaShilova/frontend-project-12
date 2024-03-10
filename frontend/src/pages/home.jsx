@@ -125,7 +125,7 @@ export function HomePage() {
   const handleSubmitChannel = async (values) => {
     try {
       if (!selectedChannel) {
-        const data = await sendChannel(filter.clean(values.channelName));
+        const { data } = await sendChannel(filter.clean(values.channelName));
         handleSetChannel(data.id);
         toast.success(t("add"));
       } else {

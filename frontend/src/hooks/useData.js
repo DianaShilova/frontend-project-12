@@ -14,19 +14,18 @@ import { io } from "socket.io-client";
 import { AuthContext } from "../contexts/authContext.jsx";
 import { useNavigate } from "react-router-dom";
 
-const serverUrl = process.env.REACT_APP_SERVER_URL;
+// const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export const useData = () => {
   const dispatch = useDispatch();
   const authContext = useContext(AuthContext);
   const channelId = useSelector((store) => store.channels.currentChannelId);
   const navigate = useNavigate();
+  const headers = {
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  };
 
   useEffect(() => {
-    const headers = {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    };
-
     const channelsRequest = axios.get("/api/v1/channels", { headers });
     const messagesRequest = axios.get("/api/v1/messages", { headers });
 
@@ -44,7 +43,7 @@ export const useData = () => {
 
   const socket = useMemo(() => {
     if (authContext.isAuthenticated) {
-      return io(serverUrl);
+      return io("http://localhost:5001");
     }
     return null;
   }, [authContext.isAuthenticated]);
@@ -65,7 +64,7 @@ export const useData = () => {
 
     const handleRemoveChannel = (channel) => {
       dispatch(removeChannel(channel.id));
-      handleSetChannel(1);
+      handleSetChannel("1");
       dispatch(removeMessages(channel.id));
     };
     socket.on("removeChannel", handleRemoveChannel);
@@ -88,62 +87,40 @@ export const useData = () => {
   };
 
   const sendMessage = async (value) => {
-    return new Promise((resolve) => {
-      socket.emit(
-        "newMessage",
-        {
-          text: value,
-          name: authContext.username,
-          channelId,
-        },
-        () => {
-          resolve();
-        },
-      );
-    });
+    return axios.post(
+      "/api/v1/messages",
+      {
+        text: value,
+        name: authContext.username,
+        channelId,
+      },
+      { headers },
+    );
   };
 
   const sendChannel = async (channelName) => {
-    return new Promise((resolve) => {
-      socket.emit(
-        "newChannel",
-        {
-          name: channelName,
-        },
-        (response) => {
-          resolve(response.data);
-        },
-      );
-    });
+    return axios.post(
+      "/api/v1/channels",
+      {
+        name: channelName,
+      },
+      { headers },
+    );
   };
 
   const deleteChannel = async (id) => {
-    return new Promise((resolve) => {
-      socket.emit(
-        "removeChannel",
-        {
-          id,
-        },
-        () => {
-          resolve();
-        },
-      );
-    });
+    return axios.delete(`/api/v1/channels/${id}`, { headers });
   };
 
   const renameChannel = async (id, name) => {
-    return new Promise((resolve) => {
-      socket.emit(
-        "renameChannel",
-        {
-          id,
-          name,
-        },
-        () => {
-          resolve();
-        },
-      );
-    });
+    return axios.patch(
+      `/api/v1/channels/${id}`,
+      {
+        id,
+        name,
+      },
+      { headers },
+    );
   };
 
   return {

@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { AuthContext } from "../contexts/authContext";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
-const serverUrl = process.env.REACT_APP_SERVER_URL;
+// const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export const SignupPage = () => {
   const authContext = useContext(AuthContext);
@@ -64,10 +64,7 @@ export const SignupPage = () => {
             validationSchema={schema}
             onSubmit={async (values, formikBag) => {
               try {
-                const { data } = await axios.post(
-                  `${serverUrl}/api/v1/signup`,
-                  values,
-                );
+                const { data } = await axios.post(`/api/v1/signup`, values);
                 authContext.setToken(data);
                 navigate("/");
               } catch (error) {
