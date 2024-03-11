@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
-import { useData } from "../hooks/useData";
+import useData from "../hooks/useData";
 
 export const ChannelModal = (props) => {
   const { isOpen, onClose, onSubmit, id } = props;

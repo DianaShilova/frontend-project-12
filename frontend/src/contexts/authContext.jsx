@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 export const AuthContext = createContext({});
 // const serverUrl = process.env.REACT_APP_SERVER_URL;
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("token") ? true : false,
   );
@@ -65,4 +65,4 @@ export function AuthProvider({ children }) {
       </AuthContext.Provider>
     </>
   );
-}
+};

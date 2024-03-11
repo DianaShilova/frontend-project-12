@@ -17,7 +17,7 @@ const rollbarConfig = {
   environment: process.env.NODE_ENV === "development" ? "dev" : "prod",
 };
 
-function App() {
+const App = () => {
   return (
     <>
       <ProviderRollbar config={rollbarConfig}>
@@ -47,6 +47,6 @@ function App() {
       />
     </>
   );
-}
+};
 
 export default App;

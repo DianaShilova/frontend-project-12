@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
 import { Navigate } from "react-router-dom";
-import { useData } from "../hooks/useData";
+import useData from "../hooks/useData";
 import { useSelector } from "react-redux";
 import { ChannelModal } from "../components/ChannelModal";
 import { ChannelOption } from "../components/channelOption";
@@ -13,7 +13,7 @@ import filter from "leo-profanity";
 
 import "./home.css";
 
-export function HomePage() {
+export const HomePage = () => {
   const authContext = useContext(AuthContext);
   const [input, setInput] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -232,4 +232,4 @@ export function HomePage() {
         />
       </>
     );
-}
+};
