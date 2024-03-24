@@ -1,20 +1,23 @@
-import React, { useRef, useEffect } from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { Formik } from "formik";
-import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
-import "react-toastify/dist/ReactToastify.css";
-import useData from "../hooks/useData";
+import React, { useRef, useEffect } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { Formik } from 'formik';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const ChannelModal = (props) => {
-  const { isOpen, onClose, onSubmit, id } = props;
+const ChannelModal = (props) => {
+  const {
+    isOpen, 
+    onClose, 
+    onSubmit, 
+    id,
+  } = props;
   const channels = useSelector((store) => store.channels.entities);
   const inputEl = useRef(null);
   const channel = useSelector((store) => store.channels.entities[id]);
   const { t } = useTranslation();
-  const { handleSetChannel } = useData();
 
   useEffect(() => {
     if (isOpen) {
@@ -30,13 +33,13 @@ export const ChannelModal = (props) => {
       (ch) => ch.name === values.channelName,
     );
     if (!channel && existingChannel) {
-      errors.name = t("addModal.validationModal.alreadyExists");
+      errors.name = t('addModal.validationModal.alreadyExists');
     }
     if (!values.channelName) {
-      errors.name = t("addModal.validationModal.required");
+      errors.name = t('addModal.validationModal.required');
     }
     if (values.channelName.length < 3 || values.channelName.length > 20) {
-      errors.name = t("addModal.validationModal.minMax");
+      errors.name = t('addModal.validationModal.minMax');
     }
     return errors;
   };
@@ -51,21 +54,23 @@ export const ChannelModal = (props) => {
       <Modal show={isOpen} onHide={onClose}>
         <Formik
           initialValues={{
-            channelName: channel ? channel.name : "",
+            channelName: channel ? channel.name : '',
           }}
           validate={validate}
         >
-          {({ handleChange, handleBlur, values, errors }) => (
+          {({
+            handleChange, handleBlur, values, errors,
+          }) => (
             <Form onSubmit={handleSubmit(values)}>
               <Modal.Header closeButton>
                 <Modal.Title>
-                  {id ? t("editModal.editChannel") : t("addModal.addChannel")}
+                  {id ? t('editModal.editChannel') : t('addModal.addChannel')}
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form.Group>
                   <Form.Label className="visually-hidden" htmlFor="channelName">
-                    {t("addModal.channelName")}
+                    {t('addModal.channelName')}
                   </Form.Label>
                   <Form.Control
                     className="modal-input"
@@ -78,21 +83,21 @@ export const ChannelModal = (props) => {
                     required
                   />
                   {errors.name && (
-                    <div className="error-modal">{errors.name}</div>
+                  <div className="error-modal">{errors.name}</div>
                   )}
                 </Form.Group>
               </Modal.Body>
 
               <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>
-                  {t("addModal.cancel")}
+                  {t('addModal.cancel')}
                 </Button>
                 <Button
                   type="submit"
-                  disabled={errors.name ? true : false}
+                  disabled={!!errors.name}
                   variant="primary"
                 >
-                  {t("addModal.send")}
+                  {t('addModal.send')}
                 </Button>
               </Modal.Footer>
             </Form>
@@ -102,3 +107,5 @@ export const ChannelModal = (props) => {
     </div>
   );
 };
+
+export default ChannelModal;

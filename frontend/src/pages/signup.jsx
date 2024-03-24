@@ -1,18 +1,16 @@
-import React, { useContext } from "react";
-import image from "../images/person.png";
-import { useNavigate } from "react-router-dom";
-import { Form, Formik } from "formik";
-import FormBootstrap from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import * as yup from "yup";
-import axios from "axios";
-import { useTranslation } from "react-i18next";
-import { AuthContext } from "../contexts/authContext";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Form, Formik } from 'formik';
+import FormBootstrap from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import * as yup from 'yup';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { AuthContext } from '../contexts/authContext';
+import image from '../images/person.png';
 
-// const serverUrl = process.env.REACT_APP_SERVER_URL;
-
-export const SignupPage = () => {
+const SignupPage = () => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -20,22 +18,20 @@ export const SignupPage = () => {
   const schema = yup.object().shape({
     username: yup
       .string()
-      .min(3, t("signupForm.validation.username"))
-      .required(t("signupForm.validation.missField"))
-      .max(20, "signupForm.validation.username"),
+      .min(3, t('signupForm.validation.username'))
+      .required(t('signupForm.validation.missField'))
+      .max(20, 'signupForm.validation.username'),
     password: yup
       .string()
-      .required(t("signupForm.validation.missField"))
-      .min(6, t("signupForm.validation.password")),
+      .required(t('signupForm.validation.missField'))
+      .min(6, t('signupForm.validation.password')),
     confirmPassword: yup
       .string()
-      .required(t("signupForm.validation.missField"))
+      .required(t('signupForm.validation.missField'))
       .test(
-        "same-password",
-        t("signupForm.validation.confirmPassword"),
-        (value, context) => {
-          return value === context.parent.password;
-        },
+        'same-password',
+        t('signupForm.validation.confirmPassword'),
+        (value, context) => value === context.parent.password,
       ),
   });
 
@@ -53,33 +49,35 @@ export const SignupPage = () => {
       <div className="sign">
         <div className="signup-container">
           <div className="signup-image-container">
-            <img src={image} alt={t("image.registration")}></img>
+            <img src={image} alt={t('image.registration')} />
           </div>
           <Formik
             initialValues={{
-              username: "",
-              password: "",
-              confirmPassword: "",
+              username: '',
+              password: '',
+              confirmPassword: '',
             }}
             validationSchema={schema}
             onSubmit={async (values, formikBag) => {
               try {
-                const { data } = await axios.post(`/api/v1/signup`, values);
+                const { data } = await axios.post('/api/v1/signup', values);
                 authContext.setToken(data);
-                navigate("/");
+                navigate('/');
               } catch (error) {
                 if (error.response.status === 409) {
                   formikBag.setFieldError(
-                    "username",
-                    t("signupForm.validation.userAlreadyExists"),
+                    'username',
+                    t('signupForm.validation.userAlreadyExists'),
                   );
                 }
               }
             }}
           >
-            {({ errors, touched, values, handleChange }) => (
+            {({
+              errors, touched, values, handleChange,
+            }) => (
               <Form className="signup-form-container">
-                <h1>{t("signupForm.registration")}</h1>
+                <h1>{t('signupForm.registration')}</h1>
                 <FormBootstrap.Group
                   className="username input mb-3"
                   controlId="username"
@@ -87,12 +85,12 @@ export const SignupPage = () => {
                   <InputGroup hasValidation>
                     <FloatingLabel
                       controlId="username"
-                      label={t("signupForm.username")}
+                      label={t('signupForm.username')}
                       className="mb-3"
                     >
                       <FormBootstrap.Control
                         name="username"
-                        placeholder={t("signupForm.username")}
+                        placeholder={t('signupForm.username')}
                         value={values.username}
                         isValid={touched.username && !errors.username}
                         isInvalid={!!errors.username}
@@ -111,12 +109,12 @@ export const SignupPage = () => {
                   <InputGroup hasValidation>
                     <FloatingLabel
                       controlId="password"
-                      label={t("signupForm.password")}
+                      label={t('signupForm.password')}
                       className="mb-3"
                     >
                       <FormBootstrap.Control
                         name="password"
-                        placeholder={t("signupForm.password")}
+                        placeholder={t('signupForm.password')}
                         value={values.password}
                         isValid={touched.password && !errors.password}
                         isInvalid={!!errors.password}
@@ -136,12 +134,12 @@ export const SignupPage = () => {
                   <InputGroup hasValidation>
                     <FloatingLabel
                       controlId="confirmPassword"
-                      label={t("signupForm.confirmPassword")}
+                      label={t('signupForm.confirmPassword')}
                       className="mb-3"
                     >
                       <FormBootstrap.Control
                         name="confirmPassword"
-                        placeholder={t("signupForm.confirmPassword")}
+                        placeholder={t('signupForm.confirmPassword')}
                         value={values.confirmPassword}
                         isValid={
                           touched.confirmPassword && !errors.confirmPassword
@@ -157,7 +155,7 @@ export const SignupPage = () => {
                   </InputGroup>
                 </FormBootstrap.Group>
                 <button className="buttonSign" type="submit">
-                  {t("signupForm.register")}
+                  {t('signupForm.register')}
                 </button>
               </Form>
             )}
@@ -167,3 +165,5 @@ export const SignupPage = () => {
     </>
   );
 };
+
+export default SignupPage;

@@ -1,11 +1,11 @@
-import Dropdown from "react-bootstrap/Dropdown";
+import Dropdown from 'react-bootstrap/Dropdown';
 
-export const ChannelOption = (props) => {
+const ChannelOption = (props) => {
   const { id, onDelete, onEdit } = props;
   return (
     <Dropdown>
       <Dropdown.Toggle variant="Secondary" id={id}>
-        <span class="visually-hidden">Управление каналом</span>
+        <span className="visually-hidden">Управление каналом</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => onDelete()}>Удалить</Dropdown.Item>
@@ -14,3 +14,5 @@ export const ChannelOption = (props) => {
     </Dropdown>
   );
 };
+
+export default ChannelOption;
