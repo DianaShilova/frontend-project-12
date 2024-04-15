@@ -41,3 +41,6 @@ rules:
     [2, { "namedComponents": "arrow-function" }]
   testing-library/no-debug: 0
   react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
+  functional/no-conditional-statements: 0
+  functional/no-expression-statements: 0
+  functional/no-return-void: 0

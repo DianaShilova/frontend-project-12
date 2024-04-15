@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 import useData from '../hooks/useData';
 import ChannelModal from '../components/ChannelModal';
-import { ChannelOption } from '../components/channelOption';
+import ChannelOption from '../components/channelOption';
 import DeletingChannelModal from '../components/DeletingChannelModal';
 import { AuthContext } from '../contexts/authContext';
 
