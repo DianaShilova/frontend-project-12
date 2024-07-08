@@ -11,15 +11,13 @@ import DeletingChannelModal from '../components/DeletingChannelModal';
 import { AuthContext } from '../contexts/authContext';
 
 import './home.css';
-import { IRootState } from '../slices';
-import { Channels, Messages } from '../../types/store';
 
 const HomePage = () => {
   const authContext = useContext(AuthContext);
-  const [input, setInput] = useState<string>('');
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-  const [isOpenModalDelete, setIsOpenModalDelete] = useState<boolean>(false);
-  const [selectedChannel, setSelectedChannel] = useState<string | null>(null);
+  const [input, setInput] = useState('');
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
+  const [selectedChannel, setSelectedChannel] = useState(null);
   const { t } = useTranslation();
 
   const {
@@ -30,9 +28,9 @@ const HomePage = () => {
     renameChannel,
   } = useData();
 
-  const channels = useSelector<IRootState, Channels>((store) => store.channels);
-  const messages = useSelector<IRootState, Messages>((store) => store.messages);
-  const currentChannelId = useSelector<IRootState>(
+  const channels = useSelector((store) => store.channels);
+  const messages = useSelector((store) => store.messages);
+  const currentChannelId = useSelector(
     (store) => store.channels.currentChannelId,
   );
 
@@ -42,7 +40,7 @@ const HomePage = () => {
 
   const messagesQuantity = filtered.length;
 
-  const wordMessage = (messagesQuantity: number): string => {
+  const wordMessage = (messagesQuantity) => {
     const lastNumber = messagesQuantity % 10;
     if (messagesQuantity === 0) {
       return t('message.numeral.manyCase');
@@ -56,21 +54,21 @@ const HomePage = () => {
     } return t('message.numeral.manyCase');
   };
 
-  const handleOpenDeleteModal = (id: string): void => {
+  const handleOpenDeleteModal = (id) => {
     setSelectedChannel(id);
     setIsOpenModalDelete(true);
   };
 
-  const handleOpenEditModal = (selectedChannel: string): void => {
+  const handleOpenEditModal = (selectedChannel) => {
     setSelectedChannel(selectedChannel);
     setIsOpenModal(true);
   };
 
-  const handleCloseChannelModal = (): void => {
+  const handleCloseChannelModal = () => {
     setIsOpenModal(false);
   };
 
-  const renderChannels = (): JSX.Element[] => channels.ids.map((id) => (
+  const renderChannels = () => channels.ids.map((id) => (
     <li key={id}>
       <div
         className={
@@ -102,7 +100,7 @@ const HomePage = () => {
     </li>
   ));
 
-  const handleDeleteChannel = async (): Promise<void> => {
+  const handleDeleteChannel = async () => {
     try {
       await deleteChannel(selectedChannel);
       toast.success(t('delete'));
@@ -113,7 +111,7 @@ const HomePage = () => {
     }
   };
 
-  const renderMessages = (): JSX.Element[] => filtered.map((message) => (
+  const renderMessages = () => filtered.map((message) => (
     <div key={message.id}>
       <b>{message.name}</b>
       :
@@ -121,7 +119,7 @@ const HomePage = () => {
     </div>
   ));
 
-  const handleSubmitMessage = async (e: React.FormEvent): Promise<void> => {
+  const handleSubmitMessage = async (e) => {
     e.preventDefault();
     try {
       await sendMessage(filter.clean(input));
@@ -131,7 +129,7 @@ const HomePage = () => {
     }
   };
 
-  const handleSubmitChannel = async (values: { channelName: string }): Promise<void> => {
+  const handleSubmitChannel = async (values) => {
     try {
       if (!selectedChannel) {
         const { data } = await sendChannel(filter.clean(values.channelName));
@@ -148,11 +146,11 @@ const HomePage = () => {
     }
   };
 
-  const handleAddChannel = (): void => {
+  const handleAddChannel = () => {
     setIsOpenModal(true);
   };
 
-  const handleCloseDeleteModal = (): void => {
+  const handleCloseDeleteModal = () => {
     setIsOpenModalDelete(false);
   };
 
