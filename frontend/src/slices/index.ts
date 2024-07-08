@@ -4,7 +4,7 @@ import messagesSlice from './messagesSlice';
 import { usersApi } from '../api/users';
 import { channelsApi } from '../api/channels';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     channels: channelsSlice,
     messages: messagesSlice,
@@ -13,3 +13,6 @@ export default configureStore({
   },
   middleware: (getDefMiddl) => getDefMiddl().concat(usersApi.middleware, channelsApi.middleware),
 });
+
+export type IRootState = ReturnType<typeof store.getState>;
+export default store;
