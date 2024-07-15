@@ -5,12 +5,13 @@ import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import store from '../slices/index.js';
-import LoginPage from '../pages/login.jsx';
-import HomePage from '../pages/home.jsx';
+import store from '../slices';
+import LoginPage from '../pages/login.js';
+import HomePage from '../pages/home';
 import NotFoundPage from '../pages/notfound';
-import SignupPage from '../pages/signup.jsx';
+import SignupPage from '../pages/signup.js';
 import { AuthProvider } from '../contexts/authContext';
+import React from 'react';
 
 
 const rollbarConfig = {
@@ -18,7 +19,7 @@ const rollbarConfig = {
   environment: process.env.NODE_ENV === 'development' ? 'dev' : 'prod',
 };
 
-const App = () => (
+const App = (): JSX.Element => (
   <>
     <ProviderRollbar config={rollbarConfig}>
       <ErrorBoundary>

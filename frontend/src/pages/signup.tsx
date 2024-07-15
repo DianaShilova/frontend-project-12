@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { AuthContext } from '../contexts/authContext';
+import { AuthContext } from '../contexts/authContext.jsx';
 import image from '../images/person.png';
 
 const SignupPage = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const NotFoundPage = () => {
+const NotFoundPage = (): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div>

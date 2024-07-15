@@ -7,16 +7,22 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ChannelModal = (props) => {
+interface IProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (values: { channelName: string }) => void;
+  id: string;
+}
+const ChannelModal = (props: IProps) => {
   const {
     isOpen, 
     onClose, 
     onSubmit, 
     id,
   } = props;
-  const channels = useSelector((store) => store.channels.entities);
-  const inputEl = useRef(null);
-  const channel = useSelector((store) => store.channels.entities[id]);
+  const channels = useSelector((store) => store?.channels.entities);
+  const inputEl = useRef<HTMLInputElement | null>(null);
+  const channel = useSelector((store) => store?.channels.entities[id]);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -25,7 +31,7 @@ const ChannelModal = (props) => {
     }
   }, [isOpen]);
 
-  const validate = (values) => {
+  const validate = (values: { channelName: string }) => {
     const errors = {};
 
     const channelsArr = Object.values(channels);
@@ -44,7 +50,7 @@ const ChannelModal = (props) => {
     return errors;
   };
 
-  const handleSubmit = (values) => (e) => {
+  const handleSubmit = (values: { channelName: string }) => (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(values);
   };

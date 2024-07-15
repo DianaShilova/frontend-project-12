@@ -1,6 +1,12 @@
+import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const ChannelOption = (props) => {
+interface IProps {
+  id: string;
+  onDelete: () => void;
+  onEdit: () => void;
+}
+const ChannelOption = (props: IProps) => {
   const { id, onDelete, onEdit } = props;
   return (
     <Dropdown>

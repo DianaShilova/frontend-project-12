@@ -8,17 +8,18 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
 import { AuthContext } from '../contexts/authContext';
 import image from '../images/person.png';
+import React from 'react';
 
-const LoginPage = () => {
+const LoginPage = (): JSX.Element => {
   const { t } = useTranslation();
   const schema = yup.object().shape({
     username: yup.string().required(t('loginForm.validationLogin.empty')),
     password: yup.string().required(t('loginForm.validationLogin.empty')),
   });
 
-  const authContext = useContext(AuthContext);
+  const authContext = useContext(AuthContext) as { isAuthenticated: boolean };
 
-  if (authContext.isAuthenticated) {
+  if (authContext && authContext.isAuthenticated) {
     return <Navigate to="/" />;
   } return (
     <>
@@ -49,7 +50,7 @@ const LoginPage = () => {
                 try {
                   await authContext.login(values);
                 } catch (error) {
-                  formikBag.setFieldError('password', error.message);
+                  formikBag.setFieldError('password', error?.message);
                 }
               }}
             >
