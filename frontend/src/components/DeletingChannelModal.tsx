@@ -1,7 +1,14 @@
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const DeletingChannelModal = (props) => {
+interface IProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: () => void;
+}
+
+const DeletingChannelModal = (props: IProps) => {
   const { isOpen, onClose, onSubmit } = props;
   const handleDeleteClick = () => {
     onSubmit();
